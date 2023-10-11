@@ -1,0 +1,66 @@
+[
+    {
+        "Age": 25,
+        "Email": "agrima@gmail.com",
+        "Gender": "Female",
+        "Mobile Number": "9784561234",
+        "Name": "Agrima Shukla"
+    },
+    {
+        "Age": 22,
+        "Email": "sharmaaayushi2302@gmail.com",
+        "Gender": "Female",
+        "Mobile Number": "8290441402",
+        "Name": "Aayushi Sharma"
+    },
+    {
+        "Age": 20,
+        "Email": "krishna@gmail.com",
+        "Gender": "Female",
+        "Mobile Number": "9874561234",
+        "Name": "Krishna Rathi"
+    },
+    {
+        "Age": 55,
+        "Email": "vshaurya@gmail.com",
+        "Gender": "Male",
+        "Mobile Number": "6345698745",
+        "Name": "Shaurya Verma"
+    },
+    {
+        "Age": 32,
+        "Email": "aaysuhi@gmail.com",
+        "Gender": "Female",
+        "Mobile Number": "9784561231",
+        "Name": "Aayushi Sharma"
+    },
+    {
+        "Age": 45,
+        "Email": "mrhea@gmail.com",
+        "Gender": "Female",
+        "Mobile Number": "6354987123",
+        "Name": "Rhea Mehra"
+    },
+    {
+        "Age": 78,
+        "Email": "nmathur@gmail.com",
+        "Gender": "Female",
+        "Mobile Number": "9632145678",
+        "Name": "Neha Mathur"
+    },
+    {
+        "Age": 25,
+        "Email": "aditi@gmail.com",
+        "Gender": "Female",
+        "Mobile Number": "9632145678",
+        "Name": "Aditi Munot"
+    },
+    {
+        "Age": 30,
+        "Customer Id": "customerjcWTgrSARefzMa5HmaqTLg",
+        "Email": "vrohit@gmail.com",
+        "Gender": "Male",
+        "Mobile Number": "9632145678",
+        "Name": "Rohit Verma"
+    }
+]
