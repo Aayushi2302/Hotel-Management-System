@@ -1,0 +1,26 @@
+2023-10-13 16:57:49,420 INFO     [main.py:37] Starting with the hotel management system.
+2023-10-13 16:57:49,422 DEBUG    [main.py:39] customer table created successfully.
+2023-10-13 16:57:49,422 DEBUG    [main.py:41] room table created successfully.
+2023-10-13 16:58:04,110 INFO     [main.py:37] Starting with the hotel management system.
+2023-10-13 16:58:04,110 DEBUG    [main.py:39] customer table created successfully.
+2023-10-13 16:58:04,110 DEBUG    [main.py:41] room table created successfully.
+2023-10-13 16:58:30,733 DEBUG    [main.py:57] Login credentails fecthed from database.
+2023-10-13 16:59:10,833 DEBUG    [main.py:57] Login credentails fecthed from database.
+2023-10-13 17:00:17,652 INFO     [room.py:48] Fetching room data from database.
+2023-10-13 17:00:17,655 DEBUG    [room.py:51] Room data feteched successfully.
+2023-10-13 17:01:04,519 INFO     [room.py:48] Fetching room data from database.
+2023-10-13 17:01:04,520 DEBUG    [room.py:51] Room data feteched successfully.
+2023-10-13 17:01:57,791 INFO     [main.py:37] Starting with the hotel management system.
+2023-10-13 17:01:57,792 DEBUG    [main.py:39] customer table created successfully.
+2023-10-13 17:01:57,793 DEBUG    [main.py:41] room table created successfully.
+2023-10-13 17:02:03,509 DEBUG    [main.py:57] Login credentails fecthed from database.
+2023-10-13 17:02:09,002 INFO     [room.py:48] Fetching room data from database.
+2023-10-13 17:02:09,002 DEBUG    [room.py:51] Room data feteched successfully.
+2023-10-13 17:05:58,259 INFO     [main.py:37] Starting with the hotel management system.
+2023-10-13 17:05:58,260 DEBUG    [main.py:39] customer table created successfully.
+2023-10-13 17:05:58,261 DEBUG    [main.py:41] room table created successfully.
+2023-10-13 17:06:03,962 DEBUG    [main.py:57] Login credentails fecthed from database.
+2023-10-13 17:06:24,035 INFO     [room.py:48] Fetching room data from database.
+2023-10-13 17:06:24,036 DEBUG    [room.py:51] Room data feteched successfully.
+2023-10-13 17:07:21,172 INFO     [room.py:48] Fetching room data from database.
+2023-10-13 17:07:21,173 DEBUG    [room.py:51] Room data feteched successfully.

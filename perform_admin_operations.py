@@ -1,8 +1,9 @@
-import sys
 from room import Room
 
-def display_admin_menu():
+def display_admin_menu() -> None:
     user_choice = """
+        Welcome to admin module :-)
+
         You can perfrom the below tasks :
         1. Register a room
         2 .Register an employee
@@ -13,17 +14,23 @@ def display_admin_menu():
     """
     print(user_choice)
 
-def admin_operations():
-    display_admin_menu()
-    admin_choice = int(input("\nEnter your choice between 1 to 6 : "))
-    match admin_choice:
-        case 1 : 
-            room_obj = Room()
-            room_obj.register_room()
-        case 2 : pass
-        case 3 : pass
-        case 4 : pass
-        case 5 : pass
-        case 6 : 
-            print("Thank you for using the system! Hope you had a great experience :-)")
-            # TODO : break // it is not working so try to look into it
+def admin_operations() -> None:
+    while True:
+        display_admin_menu()
+        admin_choice = int(input("\nEnter your choice between 1 to 6 : "))
+        match admin_choice:
+            case 1 : 
+                room_obj = Room()
+                room_obj.register_room()
+            case 2 : pass
+            case 3 : pass
+            case 4 : pass
+            case 5 : pass
+            case 6 : 
+                print(
+                    """
+                    Thank you for using the system! Hope you had a great experience :-)
+                    Redirecting back to staff module....
+                    """
+                )
+                break

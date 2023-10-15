@@ -1,5 +1,5 @@
 from cryptography.fernet import Fernet  # to encrypt the username and password
-from database_connection import DatabaseConnection
+from database.database_connection import DatabaseConnection
 
 # using decorator
 def get_encrypted_credentails(func):
@@ -12,7 +12,7 @@ def get_encrypted_credentails(func):
 def login_into_system(user_name, password, role):
     
     try:
-        with DatabaseConnection("hotel_management.db") as connection:
+        with DatabaseConnection("database\\hotel_management.db") as connection:
             cursor = connection.cursor()
             # first check is role is valid and present in table
             cursor.execute("SELECT role FROM login_credentials")
