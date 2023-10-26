@@ -1,4 +1,5 @@
 import sqlite3
+from sqlite3 import Connection
 
 class DatabaseConnection:
     def __init__(self, host) -> None:
@@ -8,7 +9,7 @@ class DatabaseConnection:
         except Exception as e:
             print(e)
     
-    def __enter__(self) -> None:
+    def __enter__(self) -> Connection:
         try:
             self.connection = sqlite3.connect(self.host)
             return self.connection

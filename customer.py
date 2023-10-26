@@ -14,7 +14,7 @@ import shortuuid
 # local file imports
 import input_validation.customer_input_validation as customer_input_validation
 import database.database_helper as database_helper
-from database import query_collector
+from database.query_collector import CustomerQuery
 
 class Customer:
     def register_customer(self) -> None:
@@ -31,12 +31,12 @@ class Customer:
             raise Exception("Error with registration system, try again!!")
     
     def save_customer_data_to_database(self) -> None:
-        query = query_collector.QUERY_FOR_SAVING_CUSTOMER_DATA
+        query = CustomerQuery.QUERY_FOR_SAVING_CUSTOMER_DATA
         data = (self.customer_id, self.name, self.age, self.gender, self.email, self.mobile_number)
         database_helper.update_database(query, data)   
         
     def print_customer_data_from_database(self) -> None:
-        query = query_collector.QUERY_FOR_FECTHING_CUSTOMER_DATA
+        query = CustomerQuery.QUERY_FOR_FETCHING_CUSTOMER_DATA
         customer_data = database_helper.fetch_data_from_database(query)
         if not any(customer_data):
             print("0 records found in customer table. Please enter some records!")
@@ -54,14 +54,14 @@ class Customer:
     def remove_customer_data_from_database(self) -> None:
         # add the check for user 
         customer_email = customer_input_validation.input_email_address()
-        query_for_customer_id = query_collector.QUERY_FOR_FECTHING_CUSTOMER_ID_WITH_EMAIL
+        query_for_customer_id = CustomerQuery.QUERY_FOR_FETCHING_CUSTOMER_ID_WITH_EMAIL
         customer_id_for_deletion = database_helper.fetch_data_from_database(query_for_customer_id, (customer_email,))
         # print(customer_id_for_deletion)
         if not any(customer_id_for_deletion):
             print(f"{customer_email} does not exist!")
             return
         else:
-            query = query_collector.QUERY_FOR_REMOVING_CUSTOMER_DATA
+            query = CustomerQuery.QUERY_FOR_REMOVING_CUSTOMER_DATA
             data = (customer_id_for_deletion[0][0], ) 
             database_helper.update_database(query, data)
             print("Data deleted successfully!")
