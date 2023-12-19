@@ -8,10 +8,11 @@ import maskpass
 
 from config.app_config import AppConfig
 from config.prompts import Prompts
+from controllers.admin_controller import AdminController
 from controllers.auth_controller import AuthController
+from controllers.room_controller import RoomController
 from utils.common_helper import CommonHelper
 from views.admin_views import AdminViews
-from setup import SetUp
 
 class AuthViews:
     """
@@ -26,11 +27,11 @@ class AuthViews:
         login() -> Method for taking login credentails as input.
     """
 
-    def __init__(self, auth_controller_obj: AuthController, common_helper_obj: CommonHelper) -> None:
+    def __init__(self, auth_controller_obj: AuthController, common_helper_obj: CommonHelper, admin_controller_obj: AdminController, room_controller_obj: RoomController) -> None:
         self.__max_login_attempts = AppConfig.MAXIMUM_LOGIN_ATTEMPTS
         self.auth_controller_obj = auth_controller_obj
         self.common_helper_obj = common_helper_obj
-        self.admin_view_obj = AdminViews(SetUp.admin_controller_obj)
+        self.admin_view_obj = AdminViews(admin_controller_obj, room_controller_obj)
 
     def login(self) -> None:
         """

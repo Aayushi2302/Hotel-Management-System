@@ -19,6 +19,5 @@ class AppConfig:
     # room status
     ROOM_STATUS_AVAILABLE = "available"
     ROOM_STATUS_BOOKED = "booked"
-    ROOM_STATUS_ACTIVE = "active"
     ROOM_STATUS_INACTIVE = "inactive"
     

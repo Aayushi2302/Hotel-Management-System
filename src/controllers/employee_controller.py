@@ -17,12 +17,16 @@ class EmployeeController:
                     QueryConfig.FETCH_CUSTOMER_DATA
                 )
         return data
-
-    def remove_customer_details(self, cust_email) -> int:
+    
+    def get_customer_id_from_email(self, cust_email: str) -> list:
         data =  self.db.fetch_data_from_database(
                     QueryConfig.FETCH_CUSTOMER_ID_WITH_EMAIL,
                     (cust_email, )
                 )
+        return data
+
+    def remove_customer_details(self, cust_email) -> int:
+        data =  self.get_customer_id_from_email(cust_email)
         if not data:
             return -1
         else:

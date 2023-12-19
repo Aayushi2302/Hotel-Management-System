@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     print(Prompts.WELCOME_MESSAGE)
 
-    auth_views_obj = AuthViews(SetUp.auth_controller_obj, SetUp.common_helper_obj)
+    auth_views_obj = AuthViews(SetUp.auth_controller_obj, SetUp.common_helper_obj, SetUp.admin_controller_obj, SetUp.room_controller_obj)
     auth_views_obj.login()
 
     db.connection.close()

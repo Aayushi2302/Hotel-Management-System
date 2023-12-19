@@ -6,11 +6,20 @@ from typing import Optional
 from config.app_config import AppConfig
 from config.prompts import Prompts
 from controllers.admin_controller import AdminController
+from controllers.room_controller import RoomController
+from utils.error_handler import error_handler
 from utils.input_validator.user_controller_validator import UserControllerValidator
+from views.room_views import RoomViews
 
 class AdminViews:
-    def __init__(self, admin_controller_obj: AdminController):
+    def __init__(self, admin_controller_obj: AdminController, room_controller_obj: RoomController) -> None:
         self.admin_controller_obj = admin_controller_obj
+        self.room_views_obj = RoomViews(room_controller_obj)
+
+    def admin_menu_operations(self) -> None:
+        while True:
+            if self.admin_menu():
+                break
 
     def create_emp_credentials(self, role: Optional[str] = None) -> None:
         emp_id = "EMP" + shortuuid.ShortUUID().random(5)
@@ -27,6 +36,26 @@ class AdminViews:
         else:
             print("\n" + Prompts.UNSUCCESSFUL_CREDENTIAL_CREATION + "\n")
     
-    
-
-
+    @error_handler
+    def admin_menu(self) -> bool:
+        print(Prompts.ADMIN_MENU + "\n")
+        choice = input(Prompts.ENTER_CHOICE)
+        match choice:
+            case '1':
+                print(self.room_views_obj.register_room())
+            case '2':
+                self.room_views_obj.activate_room()
+            case '3':
+                self.room_views_obj.deactivate_room()
+            case '4':
+                self.room_views_obj.view_room_details()
+            case '5':
+                self.room_views_obj.view_check_in_check_out_details()
+            case '6':
+                self.create_emp_credentials()
+            case '7':
+                print(Prompts.SUCCESSFUL_LOGOUT + "\n")
+                return True
+            case _:
+                print(Prompts.INVALID_INPUT + "\n")
+        return False

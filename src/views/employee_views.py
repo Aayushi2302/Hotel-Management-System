@@ -3,14 +3,16 @@ import shortuuid
 from config.prompts import Prompts
 from config.query import TableHeader
 from controllers.employee_controller import EmployeeController
+from controllers.room_controller import RoomController
 from utils.common_helper import CommonHelper
 from utils.error_handler import error_handler
 from utils.input_validator.user_controller_validator import UserControllerValidator
-from setup import SetUp
+from views.room_views import RoomViews
 
 class EmployeeViews:
-    def __init__(self, employee_controller_obj: EmployeeController) -> None:
+    def __init__(self, employee_controller_obj: EmployeeController, room_controller_obj: RoomController) -> None:
         self.employee_controller_obj = employee_controller_obj
+        self.room_views_obj = RoomViews(room_controller_obj)
 
     def employee_menu_operations(self) -> None:
         while True:
@@ -58,11 +60,11 @@ class EmployeeViews:
             case '1':
                 self.register_customer()
             case '2':
-                pass
+                self.room_views_obj.check_in_room()
             case '3':
-                pass
+                self.room_views_obj.check_out_room()
             case '4':
-                pass
+                self.room_views_obj.view_room_details()
             case '5':
                 self.view_customer_details()
             case '6':

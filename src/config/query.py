@@ -27,25 +27,32 @@ class TableHeader:
         "Status"
     )
 
+    AVAILABLE_ROOM_TABLE_HEADER = (
+        "Room ID",
+        "Room No",
+        "Floor No",
+        "Charges"
+    )
+
 
 class QueryConfig:
     # authentication table
     AUTHENTICATION_TABLE_CREATION = """CREATE TABLE IF NOT EXISTS authentication(
-                                                    emp_id TEXT PRIMARY KEY, 
-                                                    username TEXT, 
-                                                    password TEXT, 
-                                                    role TEXT, 
-                                                    password_type TEXT "default",
-                                                    status TEXT DEFAULT "active"
-                                                )"""
+                                            emp_id TEXT PRIMARY KEY, 
+                                            username TEXT, 
+                                            password TEXT, 
+                                            role TEXT, 
+                                            password_type TEXT "default",
+                                            status TEXT DEFAULT "active"
+                                        )"""
 
     SAVE_LOGIN_CREDENTIALS = """INSERT INTO authentication(
-                                            emp_id, 
-                                            username, 
-                                            password, 
-                                            role, 
-                                            password_type) 
-                                            VALUES(?, ?, ?, ?, ?)"""
+                                    emp_id, 
+                                    username, 
+                                    password, 
+                                    role, 
+                                    password_type) 
+                                    VALUES(?, ?, ?, ?, ?)"""
     
     FETCH_EMPID_FROM_ROLE_AND_STATUS = """
         SELECT emp_id FROM authentication
@@ -69,14 +76,14 @@ class QueryConfig:
                                 )"""
     
     SAVE_CUSTOMER_DATA = """INSERT INTO customer(
-                                        customer_id, 
-                                        name, 
-                                        age, 
-                                        gender, 
-                                        email, 
-                                        mobile_number
-                                    ) 
-                                    VALUES(?, ?, ?, ?, ?, ?)"""
+                                customer_id, 
+                                name, 
+                                age, 
+                                gender, 
+                                email, 
+                                mobile_number
+                            ) 
+                            VALUES(?, ?, ?, ?, ?, ?)"""
     
     FETCH_CUSTOMER_DATA = "SELECT * FROM customer ORDER BY name"
 
@@ -87,42 +94,47 @@ class QueryConfig:
     
     # room table
     ROOM_TABLE_CREATION = """CREATE TABLE IF NOT EXISTS room(
-                                    room_id TEXT PRIMARY KEY, 
-                                    room_no INTEGER, 
-                                    floor_no INTEGER,
-                                    charges REAL,
-                                    status TEXT DEFAULT "available"
-                                )"""
+                                room_id TEXT PRIMARY KEY, 
+                                room_no INTEGER, 
+                                floor_no INTEGER,
+                                charges REAL,
+                                status TEXT DEFAULT "available"
+                            )"""
 
     SAVE_ROOM_DATA = """INSERT INTO room(
-                                    room_id, 
-                                    room_no, 
-                                    floor_no, 
-                                    charges
-                                ) 
-                                VALUES(?, ?, ?, ?)"""
+                            room_id, 
+                            room_no, 
+                            floor_no, 
+                            charges
+                        ) 
+                        VALUES(?, ?, ?, ?)"""
 
     FETCH_ROOM_DATA = "SELECT * FROM room ORDER BY floor_no"
 
-    FECTHING_ROOM_WITH_USER_PREFERENCE = """SELECT room_id, 
-                                                    room_no, 
-                                                    floor_no, 
-                                                    charges 
-                                                    FROM room WHERE charges <= ? AND availability = ? 
-                                                    ORDER BY floor_no"""
+    FETCH_STATUS_WITH_ROOM_ID = "SELECT status FROM room WHERE room_id = ?"
 
-    FETCHING_ROOM_WITHOUT_USER_PREFERENCE = """SELECT room_id, 
-                                                    room_no, 
-                                                    floor_no, 
-                                                    charges 
-                                                    FROM room WHERE availability = ? 
-                                                    ORDER BY floor_no"""
+    FETCH_ROOM_ID_AND_STATUS = """SELECT room_id, status FROM room
+                                    WHERE floor_no = ? AND room_no = ?"""
 
-    UPDATING_ROOM_AVAILABILITY = """UPDATE room SET availability = ? WHERE room_id = ?"""
+    UPDATE_ROOM_STATUS = """UPDATE room SET status = ? WHERE room_id = ?"""
 
-    FETCHING_ROOM_ID = """SELECT room_id FROM room 
-                                WHERE floor_no = ? AND room_no = ?"""
+    FETCH_ROOM_ID_FROM_ROOM_DATA = "SELECT room_id FROM room WHERE room_no = ? AND floor_no = ?"
 
+    FECTH_ROOM_WITH_USER_PREFERENCE = """SELECT room_id, 
+                                            room_no, 
+                                            floor_no, 
+                                            charges 
+                                            FROM room WHERE charges <= ? AND status = ? 
+                                            ORDER BY floor_no"""
+
+    FETCH_AVAILABLE_ROOMS = """SELECT room_id, 
+                                room_no, 
+                                floor_no, 
+                                charges 
+                                FROM room WHERE status = ? 
+                                ORDER BY floor_no"""
+
+    # reservation table
     RESERVATION_TABLE_CREATION = """CREATE TABLE IF NOT EXISTS reservation(
                                             reservation_id TEXT PRIMARY KEY,
                                             customer_id TEXT, 
@@ -131,7 +143,7 @@ class QueryConfig:
                                             check_in_time TEXT,
                                             check_out_date TEXT,
                                             check_out_time TEXT,
-                                            is_checkout INTEGER,
+                                            is_checkout TEXT DEFAULT "No",
                                             FOREIGN KEY(customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE,
                                             FOREIGN KEY(room_id) REFERENCES room(room_id) ON DELETE CASCADE
                                         )"""
@@ -143,6 +155,5 @@ class QueryConfig:
                                 check_in_date,
                                 check_in_time,
                                 check_out_date,
-                                check_out_time,
-                                is_checkout)
-                                VALUES(?, ?, ?, ?, ?, ?, ?, ?)"""
+                                check_out_time)
+                                VALUES(?, ?, ?, ?, ?, ?, ?)"""

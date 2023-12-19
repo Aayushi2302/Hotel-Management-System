@@ -19,6 +19,10 @@ class Prompts:
     INPUT_EMPLOYEE_GENDER = "Enter gender: "
     INPUT_EMPLOYEE_ROLE = "Enter role: "
     INPUT_PASSWORD = "Enter password: "
+    INPUT_ROOM_ID = "Enter room id: "
+    CUSTOMER_OUT_DATE_INPUT = "Enter expected out date: "
+    CUSTOMER_OUT_TIME_INPUT = "Enter expected out time: "
+    CANNOT_INPUT_PAST_DATE_TIME = "Your entered a date and time that has either already passed or is invalid. Please enter again..."
     CANNOT_CREATE_ADMIN = "Admin cannot be created again...Enter some other role"
     INPUT_EMPLOYEE_EMAIL = "Enter email: "
     INPUT_MOBILE_NUMBER = "Enter mobile number: "
@@ -35,6 +39,7 @@ class Prompts:
     PASSWORD_CHANGE_SUCCESSFUL = "Password changed successfully! Now login with your new password..."
     EXIT_SYSTEM = "Do you want to exit from the system (Y/N)?"
     LOGIN_ATTEMPTS_LEFT = "Invalid login...\nLogin attempts left : {}"
+    INPUT_TIME_IN_42_HOUR_FORMAT = "Input time in 24 hour format"
 
     # customer views
     ENTER_CUSTOMER_DETAILS = "Enter customer details....\n"
@@ -48,6 +53,19 @@ class Prompts:
     ENTER_ROOM_DETAILS = "Enter room details....\n"
     SUCCESSFUL_ROOM_CREATION = "Room registered successfully...."
     UNSUCCESSFUL_ROOM_CREATION = "Unable to register room..."
+    ROOM_DOES_NOT_EXIST = "Given room does not exist..."
+    ROOM_ALREADY_INACTIVE = "Given room is already inactive..."
+    SUCCESSFUL_ROOM_DEACTIVATION = "Room deactivated successfully..."
+    UNSUCCESSFUL_ROOM_DEACTIVATION = "Unable to deactivate room..."
+    ROOM_ALREADY_ACTIVE = "Given room is already active..."
+    SUCCESSFUL_ROOM_ACTIVATION = "Room activated successfully..."
+    UNSUCCESSFUL_ROOM_ACTIVATION = "Unable to activate room..."
+    PREFERRED_ROOM_NOT_EXIST = "Sorry room does not exist according to your preference..."
+    INPUT_RESERVE_OTHER_ROOM = "Do you want to reserve any other room available(y/n) ?"
+    NO_ROOMS_AVAILABLE = "Sorry no rooms are available..."
+    UNSUCCESSFUL_CHECK_IN = "Unable to check in..."
+    SUCCESSFUL_CHECK_IN = "Checked in the room successfully..."
+
 
     # error handler
     INTEGRITY_ERROR_MESSAGE = "You entered data that already exist. Please enter unique data"
@@ -74,11 +92,12 @@ class Prompts:
 
     You can perfrom the below tasks :
     1. Add room
-    2. Register room as under-construction
-    3. Print room details
-    4. Print check-in and check-out details
-    5. Add login credentials
-    6. Logout
+    2. Activate room
+    3. Deactivate room
+    4. Print room details
+    5. Print check-in and check-out details
+    6. Add login credentials
+    7. Logout
     """
     
    

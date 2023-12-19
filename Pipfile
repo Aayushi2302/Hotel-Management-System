@@ -9,6 +9,8 @@ maskpass = "*"
 tabulate = "*"
 pytest = "*"
 pytest-cov = "*"
+pytz = "*"
+pytest-mock = "*"
 
 [dev-packages]
 

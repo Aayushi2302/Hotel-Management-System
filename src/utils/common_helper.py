@@ -1,7 +1,9 @@
+from datetime import datetime
 import re
 import hashlib
 import maskpass
-import tabulate
+import pytz
+from tabulate import tabulate
 
 from config.app_config import AppConfig
 from config.prompts import Prompts
@@ -13,7 +15,7 @@ class CommonHelper:
     def __init__(self, db: Database) -> None:
         self.db = db
 
-    def is_admin_registered(self) -> None:
+    def is_admin_registered(self) -> bool:
         user_data = self.db.fetch_data_from_database(
                     QueryConfig.FETCH_EMPID_FROM_ROLE_AND_STATUS,
                     (AppConfig.ADMIN_ROLE, AppConfig.STATUS_ACTIVE)
@@ -22,7 +24,7 @@ class CommonHelper:
             return True
         else:
             return False
-            
+       
     def create_new_password(self, username: str) -> None:
         """
             Method for creating new password for the user following strong password recommendation.
@@ -33,6 +35,7 @@ class CommonHelper:
             print(Prompts.CHANGE_PASSWORD + "\n")
             print(Prompts.STRONG_PASSWORD_REQUIREMENTS + "\n")
             input_password = maskpass.askpass(Prompts.INPUT_NEW_PASSWORD)
+            
             is_strong_password = CommonHelper.input_validation(
                                     RegexPattern.PASSWORD_PATTERN,
                                     input_password
@@ -43,9 +46,11 @@ class CommonHelper:
             else:
 
                 confirm_password = maskpass.askpass(Prompts.INPUT_CONFIRM_PASSWORD)
+                
                 if input_password != confirm_password:
                     print(Prompts.PASSWORD_NOT_MATCH + "\n")
                     continue
+
                 hashed_password = hashlib.sha256(confirm_password.encode('utf-8')).hexdigest()
                 
                 self.db.save_data_to_database(
@@ -75,3 +80,11 @@ class CommonHelper:
                 tablefmt = "simple_grid"
             )
         )
+    
+    @staticmethod
+    def get_current_date_and_time() -> tuple:
+        time_zone = pytz.timezone('Asia/Kolkata')
+        current = datetime.now(time_zone)
+        curr_time = current.strftime('%H:%M')
+        curr_date = current.strftime('%d-%m-%Y')
+        return (curr_date, curr_time)
