@@ -1,0 +1,151 @@
+2024-01-08 10:04:12,010 ERROR    [error_handler.py:41] 'tuple' object is not callable
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 69, in reception_or_staff_menu
+    self.view_customer_details()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 42, in view_customer_details
+    header = TableHeader.CUSTOMER_TABLE_HEADER()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'tuple' object is not callable
+2024-01-08 10:04:39,729 ERROR    [error_handler.py:41] 'tuple' object is not callable
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 69, in reception_or_staff_menu
+    self.view_customer_details()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 42, in view_customer_details
+    header = TableHeader.CUSTOMER_TABLE_HEADER()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'tuple' object is not callable
+2024-01-08 10:06:45,901 ERROR    [error_handler.py:41] 'tuple' object is not callable
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 69, in reception_or_staff_menu
+    self.view_customer_details()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 42, in view_customer_details
+    header = TableHeader.CUSTOMER_TABLE_HEADER()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'tuple' object is not callable
+2024-01-08 10:08:03,259 ERROR    [error_handler.py:41] 'tuple' object is not callable
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 70, in reception_or_staff_menu
+    self.view_customer_details()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 42, in view_customer_details
+    header = TableHeader.CUSTOMER_TABLE_HEADER()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'tuple' object is not callable
+2024-01-08 10:10:04,491 ERROR    [error_handler.py:44] 
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 58, in reception_or_staff_menu
+    choice = input(Prompts.ENTER_CHOICE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError
+2024-01-08 10:10:17,814 ERROR    [error_handler.py:41] 'tuple' object is not callable
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 70, in reception_or_staff_menu
+    self.view_customer_details()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 42, in view_customer_details
+    header = TableHeader.CUSTOMER_TABLE_HEADER()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'tuple' object is not callable
+2024-01-08 10:12:04,189 ERROR    [error_handler.py:41] 'tuple' object is not callable
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 70, in reception_or_staff_menu
+    self.view_customer_details()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 42, in view_customer_details
+    header = TableHeader.CUSTOMER_TABLE_HEADER()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'tuple' object is not callable
+2024-01-08 10:13:42,332 ERROR    [error_handler.py:41] 'tuple' object is not callable
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 70, in reception_or_staff_menu
+    self.view_customer_details()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 42, in view_customer_details
+    header = TableHeader.CUSTOMER_TABLE_HEADER()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'tuple' object is not callable
+2024-01-08 10:16:38,143 ERROR    [error_handler.py:44] 'Asis/Kolkata'
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 63, in reception_or_staff_menu
+    self.room_views_obj.check_in_room()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\room_views.py", line 95, in check_in_room
+    cust_checkout_date_time = RoomControllerValidator.input_out_date_and_time()
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\input_validator\room_controller_validator.py", line 53, in input_out_date_and_time
+    time_zone = pytz.timezone('Asis/Kolkata')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aasharma\.virtualenvs\Python_Mini_Project-B5KSZfRx\Lib\site-packages\pytz\__init__.py", line 188, in timezone
+    raise UnknownTimeZoneError(zone)
+pytz.exceptions.UnknownTimeZoneError: 'Asis/Kolkata'
+2024-01-08 10:20:38,582 ERROR    [error_handler.py:41] 'tmzinfo' is an invalid keyword argument for replace()
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 63, in reception_or_staff_menu
+    self.room_views_obj.check_in_room()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\room_views.py", line 95, in check_in_room
+    cust_checkout_date_time = RoomControllerValidator.input_out_date_and_time()
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\input_validator\room_controller_validator.py", line 56, in input_out_date_and_time
+    present_date_time = datetime.now().replace(tmzinfo=time_zone)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'tmzinfo' is an invalid keyword argument for replace()
+2024-01-08 10:37:32,075 ERROR    [error_handler.py:26] UNIQUE constraint failed: customer.mobile_number
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 61, in reception_or_staff_menu
+    self.register_customer()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 31, in register_customer
+    result = self.employee_controller_obj.save_customer_details(cust_data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\controllers\employee_controller.py", line 9, in save_customer_details
+    last_row_id =   self.db.save_data_to_database(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\models\database.py", line 54, in save_data_to_database
+    self.cursor.execute(query, data)
+sqlite3.IntegrityError: UNIQUE constraint failed: customer.mobile_number
+2024-01-08 11:36:50,516 ERROR    [error_handler.py:29] no such column: in_date
+Traceback (most recent call last):
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\utils\error_handler.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\employee_views.py", line 65, in reception_or_staff_menu
+    self.room_views_obj.check_out_room()
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\views\room_views.py", line 112, in check_out_room
+    result = self.room_controller_obj.save_room_details_for_check_out(cust_email, room_no, floor_no, checkout_date_time)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\controllers\room_controller.py", line 139, in save_room_details_for_check_out
+    reservation_data = self.get_reservation_id(cust_id, room_id)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\controllers\room_controller.py", line 78, in get_reservation_id
+    data =  self.db.fetch_data_from_database(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\aasharma\OneDrive - WatchGuard Technologies Inc\Python Workspace\Python Code\Python_Mini_Project\src\models\database.py", line 70, in fetch_data_from_database
+    self.cursor.execute(query, data)
+sqlite3.OperationalError: no such column: in_date

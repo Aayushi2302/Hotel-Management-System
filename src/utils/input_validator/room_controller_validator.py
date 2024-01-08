@@ -49,13 +49,13 @@ class RoomControllerValidator:
     @staticmethod
     def input_out_date_and_time() -> str:
         while True:
-            print(Prompts.INPUT_TIME_IN_42_HOUR_FORMAT + "\n")
-            time_zone = pytz.timezone('Asis/Kolkata')
+            print(Prompts.INPUT_TIME_IN_24_HOUR_FORMAT + "\n")
+            time_zone = pytz.timezone('Asia/Kolkata')
             out_date = input(Prompts.CUSTOMER_OUT_DATE_INPUT).strip()
             out_time = input(Prompts.CUSTOMER_OUT_TIME_INPUT).strip()
-            present_date_time = datetime.now().replace(tmzinfo=time_zone)
+            present_date_time = datetime.now().replace(tzinfo=time_zone)
             try:
-                out_date_time = datetime.strptime(out_date + " " + out_time, "%d-%m-%Y %H:%M").replace(tmzinfo=time_zone)
+                out_date_time = datetime.strptime(out_date + " " + out_time, "%d-%m-%Y %H:%M").replace(tzinfo=time_zone)
                 if out_date_time < present_date_time:
                     print(Prompts.CANNOT_INPUT_PAST_DATE_TIME + "\n")
                 else:

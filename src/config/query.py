@@ -16,7 +16,6 @@ class TableHeader:
         "Gender",
         "Email Address",
         "Mobile Number"
-        "Status"
     )
 
     ROOM_TABLE_HEADER = (
@@ -113,6 +112,8 @@ class QueryConfig:
 
     FETCH_STATUS_WITH_ROOM_ID = "SELECT status FROM room WHERE room_id = ?"
 
+    FETCH_CHARGES_FROM_ROOM_ID = "SELECT charges FROM room WHERE room_id = ?"
+
     FETCH_ROOM_ID_AND_STATUS = """SELECT room_id, status FROM room
                                     WHERE floor_no = ? AND room_no = ?"""
 
@@ -143,6 +144,7 @@ class QueryConfig:
                                             check_in_time TEXT,
                                             check_out_date TEXT,
                                             check_out_time TEXT,
+                                            charges REAL DEFAULT 0.0,
                                             is_checkout TEXT DEFAULT "No",
                                             FOREIGN KEY(customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE,
                                             FOREIGN KEY(room_id) REFERENCES room(room_id) ON DELETE CASCADE
@@ -157,3 +159,9 @@ class QueryConfig:
                                 check_out_date,
                                 check_out_time)
                                 VALUES(?, ?, ?, ?, ?, ?, ?)"""
+
+    FETCH_RESER_ID_FROM_CUST_AND_ROOM = "SELECT reservation_id, check_in_date FROM reservation WHERE customer_id = ? AND room_id = ?"
+
+    CHECK_OUT_ROOM  = "UPDATE reservation SET check_out_date = ?, check_out_time = ?, charges = ?, is_checkout = ? WHERE reservation_id = ?"
+
+    FETCH_RESERVATION_DETAILS  = "SELECT * FROM reservation"

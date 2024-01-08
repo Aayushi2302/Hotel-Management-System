@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from config.app_config import AppConfig
 from config.query import QueryConfig
 from controllers.employee_controller import EmployeeController
@@ -8,6 +10,8 @@ class RoomController:
         self.db = db
         self.employee_controller_obj = employee_controller_obj
 
+    # POST
+    # /room
     def save_room_details(self, room_data: tuple) -> int | None:
         last_row_id =   self.db.save_data_to_database(
                             QueryConfig.SAVE_ROOM_DATA,
@@ -15,6 +19,8 @@ class RoomController:
                         )
         return last_row_id
 
+    # GET
+    # /room/available
     def get_available_rooms(self) -> list:
         data =  self.db.fetch_data_from_database(
                     QueryConfig.FETCH_AVAILABLE_ROOMS,
@@ -22,11 +28,14 @@ class RoomController:
                 )
         return data
 
+    # GET
+    # /room
     def get_room_data(self) -> list:
         data =  self.db.fetch_data_from_database(
                     QueryConfig.FETCH_ROOM_DATA
                 )
         return data
+
 
     def is_room_available(self, room_id: str) -> bool:
         data =  self.db.fetch_data_from_database(
@@ -42,6 +51,8 @@ class RoomController:
             else:
                 return True
 
+    # PUT
+    # /room/room_id
     def update_room_status(self, floor_no: int, room_no: int, updated_status: str) -> int:
         data =  self.db.fetch_data_from_database(
                     QueryConfig.FETCH_ROOM_ID_AND_STATUS,
@@ -71,7 +82,27 @@ class RoomController:
                     (cust_preferred_price, "available")
                 )
         return data
+
+    def get_reservation_id(self, cust_id: str, room_id: str) -> str:
+        data =  self.db.fetch_data_from_database(
+                    QueryConfig.FETCH_RESER_ID_FROM_CUST_AND_ROOM,
+                    (cust_id, room_id)
+                )
+        return data
+
+    def calculate_charges(self, room_id: str, in_date: str, out_date: str) -> float:
+        data =  self.db.fetch_data_from_database(
+                    QueryConfig.FETCH_CHARGES_FROM_ROOM_ID,
+                    (room_id, )
+                )
+        charges = data[0][0]
+        in_date_obj = datetime.strptime(in_date, "%d-%m-%Y")
+        out_date_obj = datetime.strptime(out_date, "%d-%m-%Y")
+        delta = (out_date_obj - in_date_obj).days
+        return charges * delta
     
+    # PUT
+    # /room/room_id
     def save_room_details_for_check_in(self, reservation_id: str, room_id: str, cust_data: tuple) -> int:
         cust_email = cust_data[0]
         data = self.employee_controller_obj.get_customer_id_from_email(cust_email)
@@ -109,8 +140,33 @@ class RoomController:
         return data
 
     def save_room_details_for_check_out(self, cust_email: str, room_no: int, floor_no: int, checkout_date_time: str) -> int:
-        data = self.employee_controller_obj.get_customer_id_from_email(cust_email)
-        if not data:
+        cust_data = self.employee_controller_obj.get_customer_id_from_email(cust_email)
+        room_data = self.get_room_id_from_room_no(room_no, floor_no)
+        if not (cust_data and room_data):
             return -1
         else:
-            pass
+            cust_id = cust_data[0][0]
+            room_id = room_data[0][0]
+            reservation_data = self.get_reservation_id(cust_id, room_id)
+            if not reservation_data:
+                return -1
+            else:
+                reservation_id = reservation_data[0][0]
+                in_date = reservation_data[0][1]
+                out_date = checkout_date_time[0]
+                out_time = checkout_date_time[1]
+                charges = self.calculate_charges(room_id, in_date, out_date)
+                reservation_data = (out_date, out_time, charges, "Yes", reservation_id)
+                room_table_data = (AppConfig.ROOM_STATUS_AVAILABLE, room_id)
+                last_row_id_reservation =  self.db.save_data_to_database(
+                                    [QueryConfig.CHECK_OUT_ROOM, QueryConfig.UPDATE_ROOM_STATUS],
+                                    [reservation_data, room_table_data]
+                                )
+                last_row_id_customer = self.db.save_data_to_database(
+                                            QueryConfig.REMOVE_CUSTOMER_DATA,
+                                            (cust_id, )
+                                        )
+                if not (last_row_id_customer and last_row_id_reservation):
+                    return 0
+                else:
+                    return charges

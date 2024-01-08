@@ -110,7 +110,10 @@ class RoomViews:
         floor_no = RoomControllerValidator.input_floor_no()
         checkout_date_time = CommonHelper.get_current_date_and_time()
         result = self.room_controller_obj.save_room_details_for_check_out(cust_email, room_no, floor_no, checkout_date_time)
-        
-    def view_check_in_check_out_details(self) -> None:
-        pass
-            
+        if result == -1:
+            print("Data does not exist")
+        elif result == 0:
+            print(Prompts.UNSUCCESSFUL_CHECK_OUT + "\n")
+        else:
+            print("Total charges are : ", result)
+            print(Prompts.SUCCESSFUL_CHECK_OUT + "\n")

@@ -39,7 +39,7 @@ class Prompts:
     PASSWORD_CHANGE_SUCCESSFUL = "Password changed successfully! Now login with your new password..."
     EXIT_SYSTEM = "Do you want to exit from the system (Y/N)?"
     LOGIN_ATTEMPTS_LEFT = "Invalid login...\nLogin attempts left : {}"
-    INPUT_TIME_IN_42_HOUR_FORMAT = "Input time in 24 hour format"
+    INPUT_TIME_IN_24_HOUR_FORMAT = "Input time in 24 hour format"
 
     # customer views
     ENTER_CUSTOMER_DETAILS = "Enter customer details....\n"
@@ -65,6 +65,8 @@ class Prompts:
     NO_ROOMS_AVAILABLE = "Sorry no rooms are available..."
     UNSUCCESSFUL_CHECK_IN = "Unable to check in..."
     SUCCESSFUL_CHECK_IN = "Checked in the room successfully..."
+    UNSUCCESSFUL_CHECK_OUT = "Unable to check out..."
+    SUCCESSFUL_CHECK_OUT = "Checked out the room successfully..."
 
 
     # error handler
@@ -83,8 +85,7 @@ class Prompts:
     3. Check out
     4. Print room details
     5. Print customer details
-    6. Delete customer 
-    7. Logout
+    6. Logout
     """
 
     ADMIN_MENU = """
@@ -95,9 +96,8 @@ class Prompts:
     2. Activate room
     3. Deactivate room
     4. Print room details
-    5. Print check-in and check-out details
-    6. Add login credentials
-    7. Logout
+    5. Add login credentials
+    6. Logout
     """
     
    

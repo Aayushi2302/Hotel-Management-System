@@ -39,18 +39,8 @@ class EmployeeViews:
         if not data:
             print(Prompts.ZERO_RECORD.format("Customer"))
         else:
-            header = TableHeader.CUSTOMER_TABLE_HEADER()
+            header = TableHeader.CUSTOMER_TABLE_HEADER
             CommonHelper.display_table(data, header)
-
-    def remove_customer(self) -> None:
-        cust_email = UserControllerValidator.input_email_address()
-        result = self.employee_controller_obj.remove_customer_details(cust_email)
-        if result == -1:
-            print(Prompts.CUSTOMER_DOES_NOT_EXIST + "\n")
-        elif result == 0:
-            print(Prompts.SUCCESSFUL_CUSTOMER_REMOVAL + "\n")
-        else:
-            print(Prompts.UNSUCCESSFUL_CUSTOMER_REMOVAL + "\n")
 
     @error_handler
     def reception_or_staff_menu(self) -> bool:
@@ -68,8 +58,6 @@ class EmployeeViews:
             case '5':
                 self.view_customer_details()
             case '6':
-                self.remove_customer()
-            case '7':
                 print(Prompts.SUCCESSFUL_LOGOUT + "\n")
                 return True
             case _:

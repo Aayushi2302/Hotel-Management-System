@@ -28,7 +28,7 @@ class AdminViews:
         emp_password = ''.join(random.choice(characters) for _ in range(8))
         if not role:
             role = UserControllerValidator.input_role()
-        password_type = AppConfig.DEFAULT_PASSWORD_TYPE
+        password_type = AppConfig.DEFAULT_PASSWORD
         emp_data = (emp_id, username, emp_password, role, password_type)
         result = self.admin_controller_obj.register_emp_credentials(emp_data)
         if result:
@@ -42,7 +42,7 @@ class AdminViews:
         choice = input(Prompts.ENTER_CHOICE)
         match choice:
             case '1':
-                print(self.room_views_obj.register_room())
+                self.room_views_obj.register_room()
             case '2':
                 self.room_views_obj.activate_room()
             case '3':
@@ -50,10 +50,8 @@ class AdminViews:
             case '4':
                 self.room_views_obj.view_room_details()
             case '5':
-                self.room_views_obj.view_check_in_check_out_details()
-            case '6':
                 self.create_emp_credentials()
-            case '7':
+            case '6':
                 print(Prompts.SUCCESSFUL_LOGOUT + "\n")
                 return True
             case _:
