@@ -2,18 +2,19 @@ from datetime import datetime
 
 from config.app_config import AppConfig
 from config.query import QueryConfig
+from models.database import db
 from controllers.employee_controller import EmployeeController
 from models.database import Database
 
 class RoomController:
-    def __init__(self, db: Database, employee_controller_obj: EmployeeController) -> None:
-        self.db = db
-        self.employee_controller_obj = employee_controller_obj
+    # def __init__(self, db: Database, employee_controller_obj: EmployeeController) -> None:
+    #     self.db = db
+    #     self.employee_controller_obj = employee_controller_obj
 
     # POST
     # /room
     def save_room_details(self, room_data: tuple) -> int | None:
-        last_row_id =   self.db.save_data_to_database(
+        last_row_id =   db.save_data_to_database(
                             QueryConfig.SAVE_ROOM_DATA,
                             room_data
                         )
@@ -22,7 +23,7 @@ class RoomController:
     # GET
     # /room/available
     def get_available_rooms(self) -> list:
-        data =  self.db.fetch_data_from_database(
+        data =  db.fetch_data_from_database(
                     QueryConfig.FETCH_AVAILABLE_ROOMS,
                     ("available", )
                 )
@@ -31,14 +32,14 @@ class RoomController:
     # GET
     # /room
     def get_room_data(self) -> list:
-        data =  self.db.fetch_data_from_database(
+        data =  db.fetch_data_from_database(
                     QueryConfig.FETCH_ROOM_DATA
                 )
         return data
 
 
     def is_room_available(self, room_id: str) -> bool:
-        data =  self.db.fetch_data_from_database(
+        data =  db.fetch_data_from_database(
                     QueryConfig.FETCH_STATUS_WITH_ROOM_ID,
                     (room_id, )
                 )
@@ -54,7 +55,7 @@ class RoomController:
     # PUT
     # /room/room_id
     def update_room_status(self, floor_no: int, room_no: int, updated_status: str) -> int:
-        data =  self.db.fetch_data_from_database(
+        data =  db.fetch_data_from_database(
                     QueryConfig.FETCH_ROOM_ID_AND_STATUS,
                     (floor_no, room_no)
                 )
@@ -67,7 +68,7 @@ class RoomController:
             if status == updated_status:
                 return -2
 
-            last_row_id =  self.db.save_data_to_database(
+            last_row_id =   db.save_data_to_database(
                                 QueryConfig.UPDATE_ROOM_STATUS,
                                 (updated_status, room_id)
                             )
@@ -77,21 +78,21 @@ class RoomController:
                 return 1
 
     def get_preferred_room(self, cust_preferred_price: float) -> list:
-        data =  self.db.fetch_data_from_database(
+        data =  db.fetch_data_from_database(
                     QueryConfig.FECTH_ROOM_WITH_USER_PREFERENCE,
                     (cust_preferred_price, "available")
                 )
         return data
 
     def get_reservation_id(self, cust_id: str, room_id: str) -> str:
-        data =  self.db.fetch_data_from_database(
+        data =  db.fetch_data_from_database(
                     QueryConfig.FETCH_RESER_ID_FROM_CUST_AND_ROOM,
                     (cust_id, room_id)
                 )
         return data
 
     def calculate_charges(self, room_id: str, in_date: str, out_date: str) -> float:
-        data =  self.db.fetch_data_from_database(
+        data =  db.fetch_data_from_database(
                     QueryConfig.FETCH_CHARGES_FROM_ROOM_ID,
                     (room_id, )
                 )

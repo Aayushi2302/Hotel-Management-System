@@ -41,7 +41,7 @@ class QueryConfig:
                                             username TEXT, 
                                             password TEXT, 
                                             role TEXT, 
-                                            password_type TEXT "default",
+                                            password_type TEXT DEFAULT "default",
                                             status TEXT DEFAULT "active"
                                         )"""
 
@@ -49,9 +49,8 @@ class QueryConfig:
                                     emp_id, 
                                     username, 
                                     password, 
-                                    role, 
-                                    password_type) 
-                                    VALUES(?, ?, ?, ?, ?)"""
+                                    role) 
+                                    VALUES(?, ?, ?, ?)"""
     
     FETCH_EMPID_FROM_ROLE_AND_STATUS = """
         SELECT emp_id FROM authentication

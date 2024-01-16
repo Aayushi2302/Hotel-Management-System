@@ -28,7 +28,7 @@ class Database:
             Return type -> None
         """
         try:
-            self.connection = sqlite3.connect(AppConfig.DATABASE_PATH)
+            self.connection = sqlite3.connect(AppConfig.DATABASE_PATH, check_same_thread=False)
             self.cursor = self.connection.cursor()
         except Exception:
             raise sqlite3.Error

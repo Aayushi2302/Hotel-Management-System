@@ -1,16 +1,15 @@
 from typing import Tuple
 
 from config.query import QueryConfig
-from models.database import Database
+from models.database import db
 
 class AdminController:
-    def __init__(self, db: Database) -> int | None:
-        self.db = db
+    # def __init__(self, db: Database) -> int | None:
+    #     self.db = db
 
-    # POST
-    # /employee_credentials
+    
     def register_emp_credentials(self, emp_data: Tuple[str]) -> None:
-        last_row_id =  self.db.save_data_to_database(
+        last_row_id =   db.save_data_to_database(
                             QueryConfig.SAVE_LOGIN_CREDENTIALS,
                             emp_data
                         )
