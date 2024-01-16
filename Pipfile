@@ -11,6 +11,10 @@ pytest = "*"
 pytest-cov = "*"
 pytz = "*"
 pytest-mock = "*"
+flask = "*"
+flask-smorest = "*"
+python-dotenv = "*"
+flask-jwt-extended = "*"
 
 [dev-packages]
 

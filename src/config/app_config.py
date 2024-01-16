@@ -1,5 +1,5 @@
 class AppConfig:
-    DATABASE_PATH = "src\\models\\hotel_management.db"
+    DATABASE_PATH = "hotel_management.db"
     LOG_FILE_PATH = "logs.log"
     MAXIMUM_LOGIN_ATTEMPTS = 3
 
