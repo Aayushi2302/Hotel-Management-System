@@ -18,8 +18,9 @@ blp = Blueprint("admin", __name__, description = "Admin operations")
 class AdminOperations(MethodView):
 
     @error_handler
-    @role_based_access(RoleMapping.ADMIN_ROLE)
+    @role_based_access((RoleMapping.ADMIN_ROLE, ))
     @jwt_required()
+    @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.arguments(EmployeeSchema)
     @blp.response(201, EmployeeSchema)
     def post(self, employee_data):

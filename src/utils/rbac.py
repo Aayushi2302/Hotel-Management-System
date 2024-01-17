@@ -9,7 +9,7 @@ def role_based_access(allowed_roles: tuple):
             verify_jwt_in_request()
             claims = get_jwt()
             if claims["role"] not in allowed_roles:
-                abort(401, message="You don't have permission to access this functionality.")
+                abort(403, message="You don't have permission to access this functionality.")
             else:
                 return func(*args, **kwargs)
         return inner
