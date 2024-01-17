@@ -85,7 +85,9 @@ class QueryConfig:
     
     FETCH_CUSTOMER_DATA = "SELECT * FROM customer ORDER BY name"
 
-    FETCH_CUSTOMER_ID_WITH_EMAIL = "SELECT customer_id FROM customer WHERE email = ?"
+    FETCH_CUSTOMER_ID_AND_STATUS_FROM_EMAIL = "SELECT customer_id, status FROM customer WHERE email = ?"
+
+    UPDATE_CUSTOMER_STATUS = "UPDATE customer SET status = ? WHERE customer_id = ?"
 
     REMOVE_CUSTOMER_DATA =  "DELETE FROM customer WHERE customer_id = ?"
 
@@ -96,7 +98,8 @@ class QueryConfig:
                                 room_no INTEGER, 
                                 floor_no INTEGER,
                                 charges REAL,
-                                status TEXT DEFAULT "available"
+                                status TEXT DEFAULT "available",
+                                UNIQUE (room_no, floor_no)
                             )"""
 
     SAVE_ROOM_DATA = """INSERT INTO room(

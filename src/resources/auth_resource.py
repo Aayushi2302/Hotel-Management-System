@@ -1,9 +1,10 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt
 from schemas.auth_schema import LoginSchema
 from controllers.auth_controller import AuthController
 from utils.role_mapping import RoleMapping
+from blocklist import BLOCKLIST
 
 blp = Blueprint("authentication", __name__, description = "Authentication operations")
 
@@ -21,3 +22,12 @@ class Login(MethodView):
         else:
             abort(401, message="Invalid login.")
 
+@blp.route("/logout")
+class Logout(MethodView):
+
+    @jwt_required()
+    @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
+    def post(self):
+        jti = get_jwt()["jti"]
+        BLOCKLIST.add(jti)
+        return {"message" : "Successfully logged out."}

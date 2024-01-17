@@ -5,11 +5,11 @@ from config.query import QueryConfig
 from models.database import db
 from controllers.employee_controller import EmployeeController
 from models.database import Database
+from utils.common_helper import CommonHelper
 
 class RoomController:
-    # def __init__(self, db: Database, employee_controller_obj: EmployeeController) -> None:
-    #     self.db = db
-    #     self.employee_controller_obj = employee_controller_obj
+    def __init__(self) -> None:
+        self.employee_controller_obj = EmployeeController()
 
     # POST
     # /room
@@ -27,15 +27,17 @@ class RoomController:
                     QueryConfig.FETCH_AVAILABLE_ROOMS,
                     ("available", )
                 )
-        return data
+        keys = ['room_id', 'room_no', 'floor_no', 'charges']
+        return CommonHelper.jsonify_data(data, keys)
 
     # GET
     # /room
-    def get_room_data(self) -> list:
+    def get_room_data(self) -> dict:
         data =  db.fetch_data_from_database(
                     QueryConfig.FETCH_ROOM_DATA
                 )
-        return data
+        keys = ['room_id', 'room_no', 'floor_no', 'charges', 'status']
+        return CommonHelper.jsonify_data(data, keys)
 
 
     def is_room_available(self, room_id: str) -> bool:
@@ -54,7 +56,7 @@ class RoomController:
 
     # PUT
     # /room/room_id
-    def update_room_status(self, floor_no: int, room_no: int, updated_status: str) -> int:
+    def update_room_status(self, room_no: int, floor_no: int, updated_status: str) -> int:
         data =  db.fetch_data_from_database(
                     QueryConfig.FETCH_ROOM_ID_AND_STATUS,
                     (floor_no, room_no)
@@ -68,21 +70,19 @@ class RoomController:
             if status == updated_status:
                 return -2
 
-            last_row_id =   db.save_data_to_database(
-                                QueryConfig.UPDATE_ROOM_STATUS,
-                                (updated_status, room_id)
-                            )
-            if not last_row_id:
-                return 0
-            else:
-                return 1
+            db.save_data_to_database(
+                QueryConfig.UPDATE_ROOM_STATUS,
+                (updated_status, room_id)
+            )
+            return 1
 
     def get_preferred_room(self, cust_preferred_price: float) -> list:
         data =  db.fetch_data_from_database(
                     QueryConfig.FECTH_ROOM_WITH_USER_PREFERENCE,
                     (cust_preferred_price, "available")
                 )
-        return data
+        keys = ['room_id', 'room_no', 'floor_no', 'charges', 'status']
+        return CommonHelper.jsonify_data(data, keys)
 
     def get_reservation_id(self, cust_id: str, room_id: str) -> str:
         data =  db.fetch_data_from_database(
@@ -124,7 +124,7 @@ class RoomController:
     
                 reservation_data = (reservation_id, cust_id, room_id, cust_checkin_date, cust_checkin_time, cust_checkout_date, cust_checkout_time)
                 room_table_data = (AppConfig.ROOM_STATUS_BOOKED, room_id)
-                last_row_id =   self.db.save_data_to_database(
+                last_row_id =   db.save_data_to_database(
                                     [QueryConfig.CHECK_IN_ROOM, QueryConfig.UPDATE_ROOM_STATUS],
                                     [reservation_data, room_table_data]
                                 )
@@ -134,20 +134,18 @@ class RoomController:
                     return 1
 
     def get_room_id_from_room_no(self, room_no: int, floor_no: int) -> list:
-        data =  self.db.fetch_data_from_database(
+        data =  db.fetch_data_from_database(
                     QueryConfig.FETCH_ROOM_ID_FROM_ROOM_DATA,
                     (room_no, floor_no)
                 )
         return data
 
-    def save_room_details_for_check_out(self, cust_email: str, room_no: int, floor_no: int, checkout_date_time: str) -> int:
+    def save_room_details_for_check_out(self, cust_email: str, room_id: str, checkout_date_time: str) -> int:
         cust_data = self.employee_controller_obj.get_customer_id_from_email(cust_email)
-        room_data = self.get_room_id_from_room_no(room_no, floor_no)
-        if not (cust_data and room_data):
+        if not cust_data:
             return -1
         else:
             cust_id = cust_data[0][0]
-            room_id = room_data[0][0]
             reservation_data = self.get_reservation_id(cust_id, room_id)
             if not reservation_data:
                 return -1
@@ -159,15 +157,12 @@ class RoomController:
                 charges = self.calculate_charges(room_id, in_date, out_date)
                 reservation_data = (out_date, out_time, charges, "Yes", reservation_id)
                 room_table_data = (AppConfig.ROOM_STATUS_AVAILABLE, room_id)
-                last_row_id_reservation =  self.db.save_data_to_database(
+                last_row_id_reservation =  db.save_data_to_database(
                                     [QueryConfig.CHECK_OUT_ROOM, QueryConfig.UPDATE_ROOM_STATUS],
                                     [reservation_data, room_table_data]
                                 )
-                last_row_id_customer = self.db.save_data_to_database(
+                last_row_id_customer =  db.save_data_to_database(
                                             QueryConfig.REMOVE_CUSTOMER_DATA,
                                             (cust_id, )
                                         )
-                if not (last_row_id_customer and last_row_id_reservation):
-                    return 0
-                else:
-                    return charges
+                return charges

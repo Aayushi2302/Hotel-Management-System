@@ -7,3 +7,4 @@ class RegexPattern:
     USERNAME_REGEX = r"(^user@)([a-z]{5,})"
     AGE_REGEX = r"(^[1][4-9]$)|(^[2-5][0-9]$)|60"
     ROOM_ID_REGEX = r"^ROOM[a-zA-Z0-9]+$"
+    ROOM_STATUS = r"^(available|booked|inactive)$"

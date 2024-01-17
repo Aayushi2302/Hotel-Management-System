@@ -7,13 +7,15 @@ from src.models.database import db
 from src.resources.auth_resource import blp as AuthBlueprint
 from src.resources.admin_resource import blp as AdminBlueprint
 from src.resources.room_resource import blp as RoomBlueprint
+from src.resources.customer_resource import blp as CustomerBlueprint
+from src.resources.reservation_resource import blp as ReservationBlueprint
 from blocklist import BLOCKLIST
 
 def create_app():
     app = Flask(__name__)
 
     app.config["PROPAGATE_EXCEPTIONS"] = True
-    app.config["API_TITLE"] = "Stores REST API"
+    app.config["API_TITLE"] = "Hotel Management System REST API"
     app.config["API_VERSION"] = "v1"
     app.config["OPENAPI_VERSION"] = "3.0.3"
     app.config["OPENAPI_URL_PREFIX"] = "/"
@@ -70,5 +72,7 @@ def create_app():
     api.register_blueprint(AuthBlueprint)
     api.register_blueprint(AdminBlueprint)
     api.register_blueprint(RoomBlueprint)
+    api.register_blueprint(CustomerBlueprint)
+    api.register_blueprint(ReservationBlueprint)
 
     return app

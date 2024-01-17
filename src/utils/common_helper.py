@@ -88,3 +88,8 @@ class CommonHelper:
         curr_time = current.strftime('%H:%M')
         curr_date = current.strftime('%d-%m-%Y')
         return (curr_date, curr_time)
+
+    @staticmethod
+    def jsonify_data(data: list, keys: list) -> dict:
+        json_data = [dict(zip(keys, record)) for record in data]
+        return json_data

@@ -26,7 +26,7 @@ def error_handler(func):
         except sqlite3.IntegrityError as error:
             logger.exception(error)
             print(Prompts.INTEGRITY_ERROR_MESSAGE + "\n")
-            abort(500, message=Prompts.INTEGRITY_ERROR_MESSAGE)
+            abort(409, message=Prompts.INTEGRITY_ERROR_MESSAGE)
         except sqlite3.OperationalError as error:
             logger.exception(error)
             print(Prompts.OPERATIONAL_ERROR_MESSAGE + "\n")
