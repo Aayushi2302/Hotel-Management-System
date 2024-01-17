@@ -1,0 +1,420 @@
+{
+	"info": {
+		"_postman_id": "0be8501b-12cf-4e45-925c-f3162344508e",
+		"name": "Hotel Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32152078"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "/login - to login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// var res = pm.response.json();\r",
+									"// pm.collectionVariables.set('access_token', res.access_token);\r",
+									"pm.globals.set(\"access_token\", pm.response.json().access_token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"user@aayushi\",\r\n    \"password\" : \"Aayushi@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/logout - to logout user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "/employee - create employee credentials",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwNDk3NTQ3NSwianRpIjoiNDE4ZTk4MWQtNGQ5YS00ZjI4LTlhNDktNTY4ZTE2ZDM0ZWMyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InVzZXJAYWF5dXNoaSIsIm5iZiI6MTcwNDk3NTQ3NSwiY3NyZiI6Ijg1MDExYjQzLWI5Y2YtNDBiZi04MWUwLTRjZWJjNjY5NWFiZSIsImV4cCI6MTcwNDk3NjM3NSwicm9sZSI6ImFkbWluIn0.KCliRSd-usId3spGkyn7Bcbgp69QYbTu9AwLCm6WP1w",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"user@aditi\",\r\n    \"role\" : \"staff\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/employee",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Room",
+			"item": [
+				{
+					"name": "/room - create room",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"room_no\" : 15,\r\n    \"floor_no\" : 1,\r\n    \"charges\" : 4500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/room",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/room - get room data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/room",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/room - update room status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"room_no\" : 1,\r\n    \"floor_no\" : 2,\r\n    \"status\" : \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/room",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/room/available - get available rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/room/available",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room",
+								"available"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/room/preferred - get rooms according to price preferrence",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/room/preferred?price=2000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room",
+								"preferred"
+							],
+							"query": [
+								{
+									"key": "price",
+									"value": "2000"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "/customer - create customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Dev Sinha\",\r\n    \"age\" : \"25\",\r\n    \"gender\" : \"m\",\r\n    \"email\" : \"sdev23@gmail.com\",\r\n    \"mobile_number\" : \"9876985254\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/customer",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/customer - get customer data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/customer",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/customer/customer_email - deactivate customer",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/customer/sdev23@gmail.com",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"sdev23@gmail.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservation",
+			"item": [
+				{
+					"name": "/reservation/check-in - create reservation record for check in",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cust_email\" : \"sdev23@gmail.com\",\r\n    \"cust_checkout_date\" : \"18-01-2024\",\r\n    \"cust_checkout_time\" : \"10:45\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/reservation/check-in/ROOMG3K58",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"reservation",
+								"check-in",
+								"ROOMG3K58"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/reservation/check-out - update reservation record for check out",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cust_email\" : \"sdev23@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/reservation/check-out/ROOMG3K58",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"reservation",
+								"check-out",
+								"ROOMG3K58"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "anyvalue",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}
