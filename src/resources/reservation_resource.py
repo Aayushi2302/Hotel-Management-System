@@ -18,7 +18,6 @@ blp = Blueprint("reservation", __name__, description = "Reservation operations")
 class ReservationCheckIn(MethodView):
     @error_handler
     @role_based_access((RoleMapping.STAFF_ROLE, RoleMapping.RECEPTION_ROLE))
-    @jwt_required()
     @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.arguments(ReservationCheckInSchema)
     @blp.response(201, ReservationCheckInSchema)
@@ -51,7 +50,6 @@ class ReservationCheckIn(MethodView):
 class ReservationCheckIn(MethodView):
     @error_handler
     @role_based_access((RoleMapping.STAFF_ROLE, RoleMapping.RECEPTION_ROLE))
-    @jwt_required()
     @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.arguments(ReservationCheckOutSchema)
     @blp.response(201, ReservationCheckOutSchema)

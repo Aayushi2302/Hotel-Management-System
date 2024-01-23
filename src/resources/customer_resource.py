@@ -29,7 +29,6 @@ def send_simple_message(to, subject, body):
 class CustomerOperations(MethodView):
     @error_handler
     @role_based_access((RoleMapping.STAFF_ROLE, RoleMapping.RECEPTION_ROLE))
-    @jwt_required()
     @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.arguments(CustomerSchema)
     @blp.response(201, CustomerSchema)
@@ -75,7 +74,6 @@ class CustomerOperations(MethodView):
 
     @error_handler
     @role_based_access((RoleMapping.STAFF_ROLE, RoleMapping.RECEPTION_ROLE))
-    @jwt_required()
     @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.response(200, CustomerSchema(many=True))
     def get(self):
@@ -90,7 +88,6 @@ class CustomerOperations(MethodView):
 class CustomerOperationsID(MethodView):
     @error_handler
     @role_based_access((RoleMapping.STAFF_ROLE, RoleMapping.RECEPTION_ROLE))
-    @jwt_required()
     @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.response(200, CustomerUpdateSchema)
     def patch(self, customer_email: str):

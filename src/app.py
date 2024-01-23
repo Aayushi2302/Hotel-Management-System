@@ -13,6 +13,7 @@ from blocklist import BLOCKLIST
 
 def create_app():
     app = Flask(__name__)
+    # app.register_error_handler - explore about it.
 
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "Hotel Management System REST API"

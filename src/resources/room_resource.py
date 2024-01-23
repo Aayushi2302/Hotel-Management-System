@@ -18,7 +18,6 @@ class RoomOperations(MethodView):
 
     @error_handler
     @role_based_access((RoleMapping.ADMIN_ROLE, ))
-    @jwt_required()
     @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.arguments(RoomSchema)
     @blp.response(201, RoomSchema)
@@ -47,7 +46,6 @@ class RoomOperations(MethodView):
 
     @error_handler
     @role_based_access((RoleMapping.ADMIN_ROLE, RoleMapping.STAFF_ROLE, RoleMapping.RECEPTION_ROLE))
-    @jwt_required()
     @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.response(200, RoomSchema(many=True))
     def get(self):
@@ -59,7 +57,6 @@ class RoomOperations(MethodView):
 
     @error_handler
     @role_based_access((RoleMapping.ADMIN_ROLE, ))
-    @jwt_required()
     @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.arguments(RoomSchemaUpdate)
     @blp.response(200, RoomSchemaUpdate)
@@ -85,7 +82,6 @@ class RoomOperations(MethodView):
 class RoomAvailable(MethodView):
     @error_handler
     @role_based_access((RoleMapping.ADMIN_ROLE, RoleMapping.STAFF_ROLE, RoleMapping.RECEPTION_ROLE))
-    @jwt_required()
     @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.response(200, RoomSchema(many=True))
     def get(self):
@@ -99,7 +95,6 @@ class RoomAvailable(MethodView):
 class PreferredRoom(MethodView):
     @error_handler
     @role_based_access((RoleMapping.ADMIN_ROLE, RoleMapping.STAFF_ROLE, RoleMapping.RECEPTION_ROLE))
-    @jwt_required()
     @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
     @blp.response(200, RoomSchema(many=True))
     def get(self):
