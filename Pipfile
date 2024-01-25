@@ -16,6 +16,8 @@ flask-smorest = "*"
 python-dotenv = "*"
 flask-jwt-extended = "*"
 requests = "*"
+fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
 
 [dev-packages]
 

@@ -1,29 +1,18 @@
-import shortuuid
 import string
 import random
+import shortuuid
 
+from sqlite3 import Error
+from fastapi import Body, APIRouter, HTTPException
+from starlette import status
 from config.app_config import AppConfig
-from flask.views import MethodView
-from flask_smorest import Blueprint, abort
-from schemas.admin_schema import EmployeeSchema
 from controllers.admin_controller import AdminController
-from flask_jwt_extended import jwt_required
-from utils.rbac import role_based_access
-from utils.role_mapping import RoleMapping
-from utils.error_handler import error_handler
 
-blp = Blueprint("admin", __name__, description = "Admin operations")
+router = APIRouter()
 
-@blp.route("/employee")
-class AdminOperations(MethodView):
-
-    @error_handler
-    @role_based_access((RoleMapping.ADMIN_ROLE, ))
-    @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
-    @blp.arguments(EmployeeSchema)
-    @blp.response(201, EmployeeSchema)
-    def post(self, employee_data):
-
+@router.post("/employee", status_code=status.HTTP_201_CREATED)
+async def register_employee(employee_data=Body()):
+    try:
         emp_id = "EMP" + shortuuid.ShortUUID().random(5)
         characters = string.ascii_letters + string.digits + "@#$&%"
         emp_password = ''.join(random.choice(characters) for _ in range(8))
@@ -32,19 +21,20 @@ class AdminOperations(MethodView):
 
         emp_data = (emp_id, username, emp_password, role)
 
+        print(emp_data)
+
         admin_controller_obj = AdminController()
         result = admin_controller_obj.register_emp_credentials(emp_data)
 
         if not result:
-            abort(500, message="An error occurred while creating employee.")
+            raise HTTPException(500, detail="An error occurred while creating employee.")
         
-        response = {
-            "employee_id" : emp_id,
-            "username" : username,
-            "password" : emp_password,
-            "role" : role,
-            "password_type" : AppConfig.DEFAULT_PASSWORD
-        }
-
-        return response
-
+        return  {
+                    "employee_id" : emp_id,
+                    "username" : username,
+                    "password" : emp_password,
+                    "role" : role,
+                    "password_type" : AppConfig.DEFAULT_PASSWORD
+                }
+    except Error:
+        raise HTTPException(500, detail="Internal server error.")

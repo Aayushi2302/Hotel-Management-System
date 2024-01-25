@@ -1,34 +1,18 @@
-from flask.views import MethodView
-from flask_smorest import Blueprint, abort
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt
-from schemas.auth_schema import LoginSchema, LoginResponseSchema
+from sqlite3 import Error
+from fastapi import Body, APIRouter, HTTPException
+from starlette import status
 from controllers.auth_controller import AuthController
-from utils.role_mapping import RoleMapping
-from blocklist import BLOCKLIST
 
-blp = Blueprint("authentication", __name__, description = "Authentication operations")
+router = APIRouter()
 
-@blp.route("/login")
-class Login(MethodView):
-
-    @blp.arguments(LoginSchema)
-    @blp.response(200, LoginResponseSchema)
-    def post(self, credentials):
+@router.post("/login", status_code=status.HTTP_200_OK)
+async def login(credentials=Body()):
+    try:
         auth_controller_obj = AuthController()
         role = auth_controller_obj.authenticate_user(credentials["username"], credentials["password"]).upper()
-        get_mapped_role = RoleMapping.get_mapped_role(role)
         if role:
-            access_token = create_access_token(identity=credentials["username"],additional_claims={"role": get_mapped_role})
-            return {"message" : "User login successfully", "access_token" : access_token}
+            return {"message" : "User login successfully"}
         else:
-            abort(401, message="Invalid login.")
-
-@blp.route("/logout")
-class Logout(MethodView):
-
-    @jwt_required()
-    @blp.doc(parameters=[{'name': 'Authorization', 'in': 'header', 'description': 'Authorization: Bearer <access_token>', 'required': 'true'}])
-    def post(self):
-        jti = get_jwt()["jti"]
-        BLOCKLIST.add(jti)
-        return {"message" : "Successfully logged out."}
+            raise HTTPException(401, detail="Invalid login.")
+    except Error:
+        raise HTTPException(500, detail="Internal server error.")
