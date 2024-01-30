@@ -21,7 +21,7 @@ class EmployeeController:
         data =  db.fetch_data_from_database(
                     QueryConfig.FETCH_CUSTOMER_DATA
                 )
-        keys = ['room_id', 'name', 'age', 'gender', 'email', 'mobile_number', 'status']
+        keys = ['cust_id', 'name', 'age', 'gender', 'email', 'mobile_number', 'status']
         return CommonHelper.jsonify_data(data, keys)
     
     # GET

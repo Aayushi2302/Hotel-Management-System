@@ -17,7 +17,7 @@ python-dotenv = "*"
 flask-jwt-extended = "*"
 requests = "*"
 fastapi = "*"
-uvicorn = {extras = ["standard"], version = "*"}
+uvicorn = {extras = ["standard"] }
 
 [dev-packages]
 

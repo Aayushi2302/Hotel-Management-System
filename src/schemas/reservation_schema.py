@@ -1,17 +1,24 @@
-from marshmallow import Schema, fields, validate
+from pydantic import BaseModel, Field
 from config.regex_pattern import RegexPattern
 
-class ReservationCheckInSchema(Schema):
-    reservation_id = fields.Str(dump_only=True)
-    cust_email = fields.Str(required=True)
-    cust_checkin_date = fields.Str(dump_only=True)
-    cust_checkin_time = fields.Str(dump_only=True)
-    cust_checkout_date = fields.Str(required=True)
-    cust_checkout_time = fields.Str(required=True)
+class ReservationCheckInSchemaArguments(BaseModel):
+    cust_email : str = Field(pattern=RegexPattern.EMAIL_REGEX)
+    cust_checkout_date : str
+    cust_checkout_time : str
 
-class ReservationCheckOutSchema(Schema):
-    cust_email = fields.Str(required=True)
-    cust_checkout_date = fields.Str(dump_only=True)
-    cust_checkout_time = fields.Str(dump_only=True)
-    charges = fields.Str(dump_only=True)
+class ReservationCheckInSchemaResponse(BaseModel):
+    reservation_id : str
+    cust_email : str = Field(pattern=RegexPattern.EMAIL_REGEX)
+    cust_checkin_date : str
+    cust_checkin_time : str
+    cust_checkout_date : str
+    cust_checkout_time : str
 
+class ReservationCheckOutSchemaArguments(BaseModel):
+    cust_email : str = Field(pattern=RegexPattern.EMAIL_REGEX)
+
+class ReservationCheckOutSchemaResponse(BaseModel):
+    cust_email : str = Field(pattern=RegexPattern.EMAIL_REGEX)
+    cust_checkout_date : str
+    cust_checkout_time : str
+    charges : float

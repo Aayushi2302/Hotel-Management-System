@@ -1,20 +1,22 @@
 import shortuuid
 from sqlite3 import Error
-from fastapi import Body, APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Path
 from starlette import status
 
 from config.app_config import AppConfig
+from config.regex_pattern import RegexPattern
+from schemas.customer_schema import CustomerSchemaArguments, CustomerSchemaResponse, CustomerUpdateSchema
 from controllers.employee_controller import EmployeeController
 
 router = APIRouter()
 
-@router.post("/customer", status_code=status.HTTP_201_CREATED)
-async def register_customer(customer_data=Body()):
+@router.post("/customer", status_code=status.HTTP_201_CREATED, response_model=CustomerSchemaResponse)
+async def register_customer(customer_data: CustomerSchemaArguments):
     try:
         cust_id = "CUST" + shortuuid.ShortUUID().random(5)
-        name = customer_data["name"]
-        age = customer_data["age"]
-        gender = customer_data["gender"]
+        name = customer_data.name
+        age = customer_data.age
+        gender = customer_data.gender
 
         if gender in ('f', 'F'):
             gender = "Female"
@@ -22,8 +24,8 @@ async def register_customer(customer_data=Body()):
             gender = "Male"
         else:
             raise HTTPException(400, detail="Invalid gender supplied. Gender can be either 'f' or 'm'.")
-        email = customer_data["email"]
-        mobile_number = customer_data["mobile_number"]
+        email = customer_data.email
+        mobile_number = customer_data.mobile_number
 
         cust_data = (cust_id, name, age, gender, email, mobile_number)
         employee_controller_obj = EmployeeController()
@@ -46,7 +48,7 @@ async def register_customer(customer_data=Body()):
     except Error:
         raise HTTPException(500, detail="Internal Server Error")
 
-@router.get("/customer", status_code=status.HTTP_200_OK)
+@router.get("/customer", status_code=status.HTTP_200_OK, response_model=list[CustomerSchemaResponse])
 async def get_all_customers():
     employee_controller_obj = EmployeeController()
     data = employee_controller_obj.get_customer_details()
@@ -55,8 +57,8 @@ async def get_all_customers():
     else:
         return data
 
-@router.patch("/customer/{customer_email}", status_code=status.HTTP_200_OK)
-def deactivate_customer(customer_email):
+@router.patch("/customer/{customer_email}", status_code=status.HTTP_200_OK, response_model=CustomerUpdateSchema)
+async def deactivate_customer(customer_email: str = Path(pattern=RegexPattern.EMAIL_REGEX)):
     try:
         employee_controller_obj = EmployeeController()
         new_status = AppConfig.STATUS_INACTIVE
