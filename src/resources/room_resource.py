@@ -4,13 +4,19 @@ from fastapi import APIRouter, HTTPException, Query
 from starlette import status
 
 from config.app_config import AppConfig
-from schemas.room_schema import RoomSchemaArguments, RoomSchemaResponse, RoomSchemaUpdate
+from schemas.room_schema import RoomSchemaArguments, RoomSchemaResponse, RoomSchemaUpdate, AvailableRoomSchemaResponse
 from controllers.room_controller import RoomController
+from resources.auth_resource import token_dependency
+from utils.rbac import role_based_access
+from utils.role_mapping import RoleMapping
 
-router = APIRouter()
+router = APIRouter(
+    tags=["room"]
+)
 
 @router.post("/room", status_code=status.HTTP_201_CREATED, response_model=RoomSchemaResponse)
-async def create_room(room_data: RoomSchemaArguments):
+@role_based_access((RoleMapping["ADMIN"], ))
+def create_room(token: token_dependency, room_data: RoomSchemaArguments):
     try:
         room_id = "ROOM" + shortuuid.ShortUUID().random(5)
         room_no = room_data.room_no
@@ -37,7 +43,8 @@ async def create_room(room_data: RoomSchemaArguments):
         raise HTTPException(500, detail="Internal Server Error.")
 
 @router.get("/room", status_code=status.HTTP_200_OK, response_model=list[RoomSchemaResponse])
-async def get_all_rooms():
+@role_based_access((RoleMapping["ADMIN"], RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
+def get_all_rooms(token: token_dependency):
     try:
         room_controller_obj = RoomController()
         data = room_controller_obj.get_room_data()
@@ -48,7 +55,8 @@ async def get_all_rooms():
         raise HTTPException(500, detail="Internal Server Error.")
 
 @router.patch("/room", status_code=status.HTTP_200_OK, response_model=RoomSchemaUpdate)
-async def update_room_status(room_data: RoomSchemaUpdate):
+@role_based_access((RoleMapping["ADMIN"], ))
+def update_room_status(token: token_dependency, room_data: RoomSchemaUpdate):
     try:
         room_no = room_data.room_no
         floor_no = room_data.floor_no
@@ -70,8 +78,9 @@ async def update_room_status(room_data: RoomSchemaUpdate):
         raise HTTPException(500, detail="Internal Server Error.")
 
 
-@router.get("/room/available", status_code=status.HTTP_200_OK, response_model=list[RoomSchemaResponse])
-async def get_all_available_rooms():
+@router.get("/room/available", status_code=status.HTTP_200_OK, response_model=list[AvailableRoomSchemaResponse])
+@role_based_access((RoleMapping["ADMIN"], RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
+def get_all_available_rooms(token: token_dependency):
     try:
         room_controller_obj = RoomController()
         data = room_controller_obj.get_available_rooms()
@@ -82,8 +91,9 @@ async def get_all_available_rooms():
         raise HTTPException(500, detail="Internal Server Error.")
 
 
-@router.get("/room/preferred", status_code=status.HTTP_200_OK, response_model=list[RoomSchemaResponse])
-async def get_preferred_price_room(price: int = Query(gt=2000)):
+@router.get("/room/preferred", status_code=status.HTTP_200_OK, response_model=list[AvailableRoomSchemaResponse])
+@role_based_access((RoleMapping["ADMIN"], RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
+def get_preferred_price_room(token: token_dependency, price: int = Query(gt=2000)):
     try:
         room_controller_obj = RoomController()
         data = room_controller_obj.get_preferred_room(price)

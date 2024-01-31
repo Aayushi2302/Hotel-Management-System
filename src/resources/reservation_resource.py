@@ -9,12 +9,18 @@ from controllers.room_controller import RoomController
 from schemas.reservation_schema import ReservationCheckInSchemaArguments, ReservationCheckInSchemaResponse, \
                                       ReservationCheckOutSchemaArguments, ReservationCheckOutSchemaResponse
 from utils.common_helper import CommonHelper
+from resources.auth_resource import token_dependency
+from utils.rbac import role_based_access
+from utils.role_mapping import RoleMapping
 
-router = APIRouter()
+router = APIRouter(
+    tags=["reservation"]
+)
 
 @router.post("/reservation/check-in/<string:room_id>",
                 status_code=status.HTTP_201_CREATED, response_model=ReservationCheckInSchemaResponse)
-async def check_in_room(cust_data: ReservationCheckInSchemaArguments, room_id: str = Path(pattern=RegexPattern.ROOM_ID_REGEX)):
+@role_based_access((RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
+def check_in_room(token: token_dependency, cust_data: ReservationCheckInSchemaArguments, room_id: str = Path(pattern=RegexPattern.ROOM_ID_REGEX)):
     reservation_id = "RESR" + shortuuid.ShortUUID().random(5)
     cust_checkin_date_time = CommonHelper.get_current_date_and_time()
     cust_email = cust_data.cust_email
@@ -39,9 +45,10 @@ async def check_in_room(cust_data: ReservationCheckInSchemaArguments, room_id: s
         }
         return response
 
-@router.post("/reservation/check-in/<string:room_id>",
+@router.post("/reservation/check-out/<string:room_id>",
                 status_code=status.HTTP_201_CREATED, response_model=ReservationCheckOutSchemaResponse)
-async def check_out_room(cust_data: ReservationCheckOutSchemaArguments, room_id: str = Path(pattern=RegexPattern.ROOM_ID_REGEX)):
+@role_based_access((RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
+def check_out_room(token: token_dependency, cust_data: ReservationCheckOutSchemaArguments, room_id: str = Path(pattern=RegexPattern.ROOM_ID_REGEX)):
     cust_email = cust_data.cust_email
     cust_checkout_date_time = CommonHelper.get_current_date_and_time()
     room_controller_obj = RoomController()

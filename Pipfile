@@ -18,6 +18,8 @@ flask-jwt-extended = "*"
 requests = "*"
 fastapi = "*"
 uvicorn = {extras = ["standard"] }
+python-multipart = "*"
+python-jose = {extras = ["cryptography"], version = "*"}
 
 [dev-packages]
 

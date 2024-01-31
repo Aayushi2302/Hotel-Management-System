@@ -8,6 +8,12 @@ class RoomSchemaResponse(BaseModel):
     charges : float
     status : str
 
+class AvailableRoomSchemaResponse(BaseModel):
+    room_id : str
+    room_no : int = Field(gt=0)
+    floor_no : int = Field(gt=0)
+    charges : float
+
 class RoomSchemaArguments(BaseModel):
     room_no : int = Field(gt=0)
     floor_no : int = Field(gt=0)

@@ -7,11 +7,17 @@ from config.app_config import AppConfig
 from config.regex_pattern import RegexPattern
 from schemas.customer_schema import CustomerSchemaArguments, CustomerSchemaResponse, CustomerUpdateSchema
 from controllers.employee_controller import EmployeeController
+from resources.auth_resource import token_dependency
+from utils.rbac import role_based_access
+from utils.role_mapping import RoleMapping
 
-router = APIRouter()
+router = APIRouter(
+    tags=["customer"]
+)
 
 @router.post("/customer", status_code=status.HTTP_201_CREATED, response_model=CustomerSchemaResponse)
-async def register_customer(customer_data: CustomerSchemaArguments):
+@role_based_access((RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
+def register_customer(token: token_dependency, customer_data: CustomerSchemaArguments):
     try:
         cust_id = "CUST" + shortuuid.ShortUUID().random(5)
         name = customer_data.name
@@ -49,7 +55,8 @@ async def register_customer(customer_data: CustomerSchemaArguments):
         raise HTTPException(500, detail="Internal Server Error")
 
 @router.get("/customer", status_code=status.HTTP_200_OK, response_model=list[CustomerSchemaResponse])
-async def get_all_customers():
+@role_based_access((RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
+def get_all_customers(token: token_dependency):
     employee_controller_obj = EmployeeController()
     data = employee_controller_obj.get_customer_details()
     if not data:
@@ -58,7 +65,8 @@ async def get_all_customers():
         return data
 
 @router.patch("/customer/{customer_email}", status_code=status.HTTP_200_OK, response_model=CustomerUpdateSchema)
-async def deactivate_customer(customer_email: str = Path(pattern=RegexPattern.EMAIL_REGEX)):
+@role_based_access((RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
+def deactivate_customer(token: token_dependency, customer_email: str = Path(pattern=RegexPattern.EMAIL_REGEX)):
     try:
         employee_controller_obj = EmployeeController()
         new_status = AppConfig.STATUS_INACTIVE
