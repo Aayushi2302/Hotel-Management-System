@@ -38,7 +38,7 @@ class QueryConfig:
     # authentication table
     AUTHENTICATION_TABLE_CREATION = """CREATE TABLE IF NOT EXISTS authentication(
                                             emp_id TEXT PRIMARY KEY, 
-                                            username TEXT, 
+                                            username TEXT UNIQUE, 
                                             password TEXT, 
                                             role TEXT, 
                                             password_type TEXT DEFAULT "default",
@@ -70,7 +70,8 @@ class QueryConfig:
                                     age INTEGER, 
                                     gender TEXT, 
                                     email TEXT UNIQUE, 
-                                    mobile_number TEXT UNIQUE
+                                    mobile_number TEXT UNIQUE,
+                                    status TEXT DEFAULT "active"
                                 )"""
     
     SAVE_CUSTOMER_DATA = """INSERT INTO customer(

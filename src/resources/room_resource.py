@@ -1,7 +1,8 @@
 import shortuuid
 from sqlite3 import Error
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 from starlette import status
+from typing import Annotated
 
 from config.app_config import AppConfig
 from schemas.room_schema import RoomSchemaArguments, RoomSchemaResponse, RoomSchemaUpdate, AvailableRoomSchemaResponse
@@ -48,8 +49,6 @@ def get_all_rooms(token: token_dependency):
     try:
         room_controller_obj = RoomController()
         data = room_controller_obj.get_room_data()
-        if not data:
-            raise HTTPException(404, detail="Resource not found.")
         return data
     except Error:
         raise HTTPException(500, detail="Internal Server Error.")
@@ -66,7 +65,7 @@ def update_room_status(token: token_dependency, room_data: RoomSchemaUpdate):
         if result == -1:
             raise HTTPException(404, detail="Resource which you are looking for does not exist.")
         elif result == -2:
-            raise HTTPException(412, detail=f"Resource is already {new_status}.")
+            raise HTTPException(403, detail=f"Resource is already {new_status}.")
         else:
             response = {
                 "room_no" : room_no,
@@ -84,8 +83,6 @@ def get_all_available_rooms(token: token_dependency):
     try:
         room_controller_obj = RoomController()
         data = room_controller_obj.get_available_rooms()
-        if not data:
-            raise HTTPException(404, detail="Resource not found.")
         return data
     except Error:
         raise HTTPException(500, detail="Internal Server Error.")
@@ -97,8 +94,6 @@ def get_preferred_price_room(token: token_dependency, price: int = Query(gt=2000
     try:
         room_controller_obj = RoomController()
         data = room_controller_obj.get_preferred_room(price)
-        if not data:
-            raise HTTPException(404, detail="Resource not found.")
         return data
     except Error:
         raise HTTPException(500, detail="Internal Server Error.")

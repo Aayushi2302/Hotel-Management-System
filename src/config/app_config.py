@@ -1,5 +1,6 @@
 class AppConfig:
     DATABASE_PATH = "hotel_management.db"
+    TEST_DATABASE_PATH = "test\\test_hotel_management.db"
     LOG_FILE_PATH = "logs.log"
     MAXIMUM_LOGIN_ATTEMPTS = 3
 

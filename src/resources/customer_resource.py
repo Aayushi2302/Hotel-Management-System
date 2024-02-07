@@ -74,7 +74,7 @@ def deactivate_customer(token: token_dependency, customer_email: str = Path(patt
         if result == -1:
             raise HTTPException(404, detail="Resource which you are looking for does not exist.")
         elif result == -2:
-            raise HTTPException(412, detail=f"Resource is already {new_status}.")
+            raise HTTPException(403, detail=f"Resource is already {new_status}.")
         else:
             response = {
                 "cust_email" : customer_email,

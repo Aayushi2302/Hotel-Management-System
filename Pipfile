@@ -20,6 +20,10 @@ fastapi = "*"
 uvicorn = {extras = ["standard"] }
 python-multipart = "*"
 python-jose = {extras = ["cryptography"], version = "*"}
+httpx = "*"
+testfixtures = "*"
+aiofiles = "*"
+jinja2 = "*"
 
 [dev-packages]
 

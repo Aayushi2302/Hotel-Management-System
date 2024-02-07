@@ -1,15 +1,15 @@
 from config.query import QueryConfig
-from models.database import db
+from models.database import Database
 from utils.common_helper import CommonHelper
 
 class EmployeeController:
-    # def __init__(self, db: Database) -> None:
-    #     self.db = db
+    def __init__(self):
+        self.db = Database()
 
     # POST
     # /customer
     def save_customer_details(self, cust_data: tuple) -> int | None:
-        last_row_id =   db.save_data_to_database(
+        last_row_id =   self.db.save_data_to_database(
                             QueryConfig.SAVE_CUSTOMER_DATA,
                             cust_data
                         )
@@ -18,7 +18,7 @@ class EmployeeController:
     # GET
     # /cutomer
     def get_customer_details(self) -> list:
-        data =  db.fetch_data_from_database(
+        data =  self.db.fetch_data_from_database(
                     QueryConfig.FETCH_CUSTOMER_DATA
                 )
         keys = ['cust_id', 'name', 'age', 'gender', 'email', 'mobile_number', 'status']
@@ -27,7 +27,7 @@ class EmployeeController:
     # GET
     # /customer/customer_email
     def get_customer_id_from_email(self, cust_email: str) -> list:
-        data =  db.fetch_data_from_database(
+        data =  self.db.fetch_data_from_database(
                     QueryConfig.FETCH_CUSTOMER_ID_AND_STATUS_FROM_EMAIL,
                     (cust_email, )
                 )
@@ -43,7 +43,7 @@ class EmployeeController:
         if status == new_status:
             return -2
 
-        db.save_data_to_database(
+        self.db.save_data_to_database(
             QueryConfig.UPDATE_CUSTOMER_STATUS,
             (new_status, cust_id)
         )

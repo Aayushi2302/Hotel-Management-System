@@ -2,36 +2,10 @@ import sqlite3
 
 from config.app_config import AppConfig
 from config.query import QueryConfig
+from models.database_access import DatabaseAccess
 from utils.error_handler import error_handler
 
 class Database:
-    """
-        This class contains methods for executing database queries fetched from QueryConfig.
-        ...
-        Attributes
-        ---------
-        connection -> sqlite3.Connection
-        cursor -> sqlite3.Cursor
-
-        Methods
-        -------
-        __init__() -> Method for creating connection and cursor object.
-        create_all_tables() -> Method for creating all database tables.
-        save_data_to_database() -> Method for saving data to single or multiple tables in database.
-        fetch_data_from_database() -> Method for fetching data from database tables.   
-    """
-    @error_handler
-    def __init__(self) -> None:
-        """
-            Method for initializing the sqlite3 connection and cursor object
-            Parameter -> self
-            Return type -> None
-        """
-        try:
-            self.connection = sqlite3.connect(AppConfig.DATABASE_PATH, check_same_thread=False)
-            self.cursor = self.connection.cursor()
-        except Exception:
-            raise sqlite3.Error
 
     def create_all_tables(self) -> None:
         """ 
@@ -39,10 +13,13 @@ class Database:
             Parameter -> self
             Return type -> None
         """
-        self.cursor.execute(QueryConfig.AUTHENTICATION_TABLE_CREATION)
-        self.cursor.execute(QueryConfig.CUSTOMER_TABLE_CREATION)
-        self.cursor.execute(QueryConfig.ROOM_TABLE_CREATION)
-        self.cursor.execute(QueryConfig.RESERVATION_TABLE_CREATION)
+        with DatabaseAccess(AppConfig.DATABASE_PATH) as connection:
+            print(AppConfig.DATABASE_PATH)
+            cursor = connection.cursor()
+            cursor.execute(QueryConfig.AUTHENTICATION_TABLE_CREATION)
+            cursor.execute(QueryConfig.CUSTOMER_TABLE_CREATION)
+            cursor.execute(QueryConfig.ROOM_TABLE_CREATION)
+            cursor.execute(QueryConfig.RESERVATION_TABLE_CREATION)
    
     def save_data_to_database(self, query: str | list, data: tuple | list) -> int:
         """
@@ -50,13 +27,15 @@ class Database:
             Paramter -> self, query: Union[str, list], data: Union[tuple, list]
             Return type -> int
         """
-        if isinstance(query, str):
-            self.cursor.execute(query, data)
-        else:
-            for i in range(len(query)):
-                self.cursor.execute(query[i], data[i])
-        self.connection.commit()
-        return self.cursor.lastrowid
+        with DatabaseAccess(AppConfig.DATABASE_PATH) as connection:
+            cursor = connection.cursor()
+            if isinstance(query, str):
+                cursor.execute(query, data)
+            else:
+                for i in range(len(query)):
+                    cursor.execute(query[i], data[i])
+            connection.commit()
+            return cursor.lastrowid
 
     def fetch_data_from_database(self, query: str, data: tuple = None) -> list:
         """
@@ -64,10 +43,16 @@ class Database:
             Paramter -> self, query: str, data: Union[tuple, None]
             Return type -> list
         """
-        if data is None:
-            self.cursor.execute(query)
-        else:
-            self.cursor.execute(query, data)
-        return self.cursor.fetchall()
+        with DatabaseAccess(AppConfig.DATABASE_PATH) as connection:
+            cursor = connection.cursor()
+            if data is None:
+                cursor.execute(query)
+            else:
+                cursor.execute(query, data)
+            return cursor.fetchall()
 
-db = Database()
+    def delete_operation_on_database(self, query: str) -> None:
+        with DatabaseAccess(AppConfig.DATABASE_PATH) as connection:
+            cursor = connection.cursor()
+            cursor.execute(query)
+

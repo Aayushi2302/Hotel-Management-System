@@ -1,5 +1,5 @@
 import random
-from sqlite3 import Error
+from sqlite3 import Error, IntegrityError
 import string
 from fastapi import APIRouter, HTTPException
 import shortuuid
@@ -32,9 +32,6 @@ def register_employee(token: token_dependency, employee_data: EmployeeSchemaArgu
         admin_controller_obj = AdminController()
         result = admin_controller_obj.register_emp_credentials(emp_data)
 
-        if not result:
-            raise HTTPException(500, detail="An error occurred while creating employee.")
-        
         return  {
                     "employee_id" : emp_id,
                     "username" : username,
@@ -42,6 +39,10 @@ def register_employee(token: token_dependency, employee_data: EmployeeSchemaArgu
                     "role" : role,
                     "password_type" : AppConfig.DEFAULT_PASSWORD
                 }
+
+    except IntegrityError as error:
+        print("*"*100, error)
+        raise HTTPException(409, detail="Data already exist")
+
     except Error as error:
-        print(error)
-        raise HTTPException(500, detail="Internal server error.")
+        raise HTTPException(500, detail="Internal server error")
