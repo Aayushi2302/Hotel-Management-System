@@ -8,13 +8,6 @@ import hashlib
 from config.app_config import AppConfig
 from config.query import QueryConfig
 from models.database import Database
-from controllers.admin_controller import AdminController
-from controllers.employee_controller import EmployeeController
-from controllers.room_controller import RoomController
-from utils.common_helper import CommonHelper
-from views.admin_views import AdminViews
-from views.employee_views import EmployeeViews
-
 class AuthController:
     """
         Class containing methods for authenticating user based on their credentails.

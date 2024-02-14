@@ -90,7 +90,6 @@ class QueryConfig:
 
     UPDATE_CUSTOMER_STATUS = "UPDATE customer SET status = ? WHERE customer_id = ?"
 
-    REMOVE_CUSTOMER_DATA =  "DELETE FROM customer WHERE customer_id = ?"
 
     
     # room table

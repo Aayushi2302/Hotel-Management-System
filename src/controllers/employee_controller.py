@@ -12,7 +12,7 @@ class EmployeeController:
         last_row_id =   self.db.save_data_to_database(
                             QueryConfig.SAVE_CUSTOMER_DATA,
                             cust_data
-                        )
+                      )
         return last_row_id
 
     # GET

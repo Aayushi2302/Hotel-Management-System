@@ -3,7 +3,6 @@ import sqlite3
 from config.app_config import AppConfig
 from config.query import QueryConfig
 from models.database_access import DatabaseAccess
-from utils.error_handler import error_handler
 
 class Database:
 
@@ -14,7 +13,6 @@ class Database:
             Return type -> None
         """
         with DatabaseAccess(AppConfig.DATABASE_PATH) as connection:
-            print(AppConfig.DATABASE_PATH)
             cursor = connection.cursor()
             cursor.execute(QueryConfig.AUTHENTICATION_TABLE_CREATION)
             cursor.execute(QueryConfig.CUSTOMER_TABLE_CREATION)

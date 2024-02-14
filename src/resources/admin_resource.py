@@ -41,8 +41,8 @@ def register_employee(token: token_dependency, employee_data: EmployeeSchemaArgu
                 }
 
     except IntegrityError as error:
-        print("*"*100, error)
         raise HTTPException(409, detail="Data already exist")
 
     except Error as error:
+        print(error)
         raise HTTPException(500, detail="Internal server error")

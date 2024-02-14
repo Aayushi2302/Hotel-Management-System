@@ -124,7 +124,7 @@ class RoomController:
     
                 reservation_data = (reservation_id, cust_id, room_id, cust_checkin_date, cust_checkin_time, cust_checkout_date, cust_checkout_time)
                 room_table_data = (AppConfig.ROOM_STATUS_BOOKED, room_id)
-                last_row_id =   self.db.save_data_to_database(
+                last_row_id = self.db.save_data_to_database(
                                     [QueryConfig.CHECK_IN_ROOM, QueryConfig.UPDATE_ROOM_STATUS],
                                     [reservation_data, room_table_data]
                                 )
@@ -161,8 +161,4 @@ class RoomController:
                                     [QueryConfig.CHECK_OUT_ROOM, QueryConfig.UPDATE_ROOM_STATUS],
                                     [reservation_data, room_table_data]
                                 )
-                last_row_id_customer =  self.db.save_data_to_database(
-                                            QueryConfig.REMOVE_CUSTOMER_DATA,
-                                            (cust_id, )
-                                        )
                 return charges

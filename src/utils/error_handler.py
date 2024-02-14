@@ -4,7 +4,6 @@ import logging
 import sqlite3
 
 from config.prompts import Prompts
-from fastapi import HTTPException
 
 logger = logging.getLogger(__name__)
 

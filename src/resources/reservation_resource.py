@@ -1,9 +1,7 @@
 import shortuuid
-from sqlite3 import Error
 from fastapi import APIRouter, HTTPException, Path
 from starlette import status
 
-from config.app_config import AppConfig
 from config.regex_pattern import RegexPattern
 from controllers.room_controller import RoomController
 from schemas.reservation_schema import ReservationCheckInSchemaArguments, ReservationCheckInSchemaResponse, \
@@ -17,10 +15,11 @@ router = APIRouter(
     tags=["reservation"]
 )
 
-@router.post("/reservation/check-in/<string:room_id>",
+@router.post("/reservation/check-in/{room_id}",
                 status_code=status.HTTP_201_CREATED, response_model=ReservationCheckInSchemaResponse)
 @role_based_access((RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
 def check_in_room(token: token_dependency, cust_data: ReservationCheckInSchemaArguments, room_id: str = Path(pattern=RegexPattern.ROOM_ID_REGEX)):
+    print(cust_data)
     reservation_id = "RESR" + shortuuid.ShortUUID().random(5)
     cust_checkin_date_time = CommonHelper.get_current_date_and_time()
     cust_email = cust_data.cust_email
@@ -29,9 +28,9 @@ def check_in_room(token: token_dependency, cust_data: ReservationCheckInSchemaAr
     room_controller_obj = RoomController()
     result = room_controller_obj.save_room_details_for_check_in(reservation_id, room_id, cust_data)
     if result == -1:
-        raise HTTPException(404, detail="Customer resource not found.")
+        raise HTTPException(404, detail="Customer not found.")
     elif result == -2:
-        raise HTTPException(404, detail="Room resource not available.")
+        raise HTTPException(404, detail="Room not available.")
     elif result == 0:
        raise HTTPException(500, detail="Internal server error.")
     else:
@@ -45,7 +44,7 @@ def check_in_room(token: token_dependency, cust_data: ReservationCheckInSchemaAr
         }
         return response
 
-@router.post("/reservation/check-out/<string:room_id>",
+@router.put("/reservation/check-out/{room_id}",
                 status_code=status.HTTP_201_CREATED, response_model=ReservationCheckOutSchemaResponse)
 @role_based_access((RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
 def check_out_room(token: token_dependency, cust_data: ReservationCheckOutSchemaArguments, room_id: str = Path(pattern=RegexPattern.ROOM_ID_REGEX)):

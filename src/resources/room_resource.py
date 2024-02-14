@@ -1,8 +1,7 @@
 import shortuuid
 from sqlite3 import Error
-from fastapi import APIRouter, HTTPException, Query, Depends
+from fastapi import APIRouter, HTTPException, Query
 from starlette import status
-from typing import Annotated
 
 from config.app_config import AppConfig
 from schemas.room_schema import RoomSchemaArguments, RoomSchemaResponse, RoomSchemaUpdate, AvailableRoomSchemaResponse
@@ -19,6 +18,7 @@ router = APIRouter(
 @role_based_access((RoleMapping["ADMIN"], ))
 def create_room(token: token_dependency, room_data: RoomSchemaArguments):
     try:
+        print(room_data)
         room_id = "ROOM" + shortuuid.ShortUUID().random(5)
         room_no = room_data.room_no
         floor_no = room_data.floor_no

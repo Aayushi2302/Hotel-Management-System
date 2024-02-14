@@ -51,20 +51,21 @@ def register_customer(token: token_dependency, customer_data: CustomerSchemaArgu
         }
 
         return response
-    except Error:
+    except Error as error:
+        print(error)
         raise HTTPException(500, detail="Internal Server Error")
 
 @router.get("/customer", status_code=status.HTTP_200_OK, response_model=list[CustomerSchemaResponse])
 @role_based_access((RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
 def get_all_customers(token: token_dependency):
-    employee_controller_obj = EmployeeController()
-    data = employee_controller_obj.get_customer_details()
-    if not data:
-        raise HTTPException(404, detail="Resource not found.")
-    else:
+    try:
+        employee_controller_obj = EmployeeController()
+        data = employee_controller_obj.get_customer_details()
         return data
+    except Error:
+        raise HTTPException(500, detail="Internal Server Error")
 
-@router.patch("/customer/{customer_email}", status_code=status.HTTP_200_OK, response_model=CustomerUpdateSchema)
+@router.delete("/customer/{customer_email}", status_code=status.HTTP_200_OK, response_model=CustomerUpdateSchema)
 @role_based_access((RoleMapping["STAFF"], RoleMapping["RECEPTION"]))
 def deactivate_customer(token: token_dependency, customer_email: str = Path(pattern=RegexPattern.EMAIL_REGEX)):
     try:
